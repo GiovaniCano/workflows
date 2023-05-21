@@ -1,0 +1,50 @@
+@use './colors' as c;
+
+$font-highlight: 'EB Garamond', serif;
+$font-base: Arial, Helvetica, sans-serif;
+
+html {
+    font-size: 18px;
+}
+
+body {
+    font-family: $font-base;
+    color: c.$blue-1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-highlight;
+    margin-top: 0;
+    font-weight: normal;
+}
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+
+.brand-text {
+    font-family: $font-highlight;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+[class^="btn-"] {
+    font-family: $font-highlight;
+    font-weight: bold;
+}
+
+.font-title {
+    font-family: $font-highlight;
+}
+
+.btn {
+    font-family: $font-highlight;
+    font-weight: bold;
+}
+
+input {
+    color: c.$blue-1;
+  &::placeholder {
+    color: transparentize(c.$blue-1, .4);
+  }
+}

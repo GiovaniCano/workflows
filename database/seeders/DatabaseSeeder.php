@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Image;
 use App\Models\Section;
 use App\Models\User;
+use App\Models\Workflow;
 use App\Models\Wysiwyg;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -18,9 +19,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user_id = User::factory(1)->create()[0]->id;
+        $user_id = User::factory(1)->create([
+            'email' => 'q@q.q'
+        ])[0]->id;
 
-        Section::factory(2)->state(['type'=>0,'user_id'=>$user_id]) // 2 workflows per user
+        Workflow::factory(2)->state(['type'=>0,'user_id'=>$user_id]) // 2 workflows per user
             ->hasAttached(Wysiwyg::factory(1), ['position'=>0]) // workflow introduction
             ->hasAttached( 
                 Section::factory(3)->state(['type'=>1,'user_id'=>$user_id]) // 3 sections per workflow

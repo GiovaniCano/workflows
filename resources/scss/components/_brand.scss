@@ -1,0 +1,49 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .logo-container {
+        height: 30px;
+        width: 30px;
+        margin-right: 5px;
+    }
+    .brand-text {
+        letter-spacing: 1px;
+        color: inherit;
+        text-decoration: none;
+    }
+
+
+    &.brand-big {
+        flex-direction: column;
+        margin-top: 2rem;
+        @include m.lg {
+            margin-top: 0;
+        }
+
+        .logo-container {
+            height: 50px;
+            width: 50px;
+            position: relative;
+            margin: 0;
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                box-shadow: v.$shadow-sm;
+            }
+        }
+        .brand-text {
+            text-shadow: v.$shadow-sm;
+            font-size: 43px;
+        }
+    }
+}

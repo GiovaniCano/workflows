@@ -1,0 +1,37 @@
+@use '../base/mixins' as m;
+
+.auth-form, .links {
+    margin: 0 auto;
+    @include m.lg {
+        margin-right: 21%;
+    }
+    max-width: 400px !important;
+    @include m.lg {
+        max-width: 300px !important;
+    }
+    width: 98%;
+
+    a{
+        color: inherit;
+    }
+}
+
+.links {
+    margin-top: 1rem;
+}
+
+.brand-auth {
+    @include m.lg {
+        position: absolute;
+        top: 29%;
+        left: 28%;
+        transform: translate(-50%, -50%);
+        translate: 0 -10px;
+    }
+}
+
+.footer-auth {
+    position: absolute;
+    bottom: .6rem;
+    left: 4%;
+}

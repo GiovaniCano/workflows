@@ -1,0 +1,17 @@
+@use '../base/mixins' as m;
+
+#hero {
+    position: relative;
+    min-height: 70vh;
+}
+.brand-landing {
+    margin-top: 0 !important;
+
+    @include m.md {
+        position: absolute;
+        z-index: 1;
+        top: 29%;
+        left: 28%;
+        transform: translate(-50%, -50%);
+    }
+}

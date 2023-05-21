@@ -1,0 +1,64 @@
+@use '../base/colors' as c;
+@use '../base/mixins' as m;
+
+#background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: c.$bg-gradient_r;
+    z-index: -99;
+
+    .background-square {
+        $base_size: 100px;
+
+        background: c.$mint-gradient-r;
+        border-radius: 70px;
+
+        position: absolute;
+        transform-origin: center center; // Sets the rotation origin to the center of the div
+
+        &:nth-of-type(1) {
+            $size_multiplier: 2.2;
+            height: $base_size * $size_multiplier;
+            width: $base_size * $size_multiplier;
+            transform: translate(-50%, -50%) rotate(-39deg); // Rotates the div around its own axis
+            top: 29% + 8%;
+            left: 28%;
+            @include m.sm {
+                top: 29%;
+            }
+        }
+        &:nth-of-type(2) {
+            $size_multiplier: 3;
+            height: $base_size * $size_multiplier;
+            width: $base_size * $size_multiplier;
+            transform: translate(-50%, -50%) rotate(-61deg); // Rotates the div around its own axis
+            top: 21% - 15%;
+            left: 98%;
+            @include m.sm {
+                top: 21%;
+            }
+        }
+        &:nth-of-type(3) {
+            $size_multiplier: 1.8;
+            height: $base_size * $size_multiplier;
+            width: $base_size * $size_multiplier;
+            transform: translate(-50%, -50%) rotate(-124deg); // Rotates the div around its own axis
+            top: 96% - 26%;
+            left: 87%;
+            @include m.sm {
+                top: 96%;
+            }
+        }
+        &:nth-of-type(4) {
+            $size_multiplier: 6;
+            height: $base_size * $size_multiplier;
+            width: $base_size * $size_multiplier;
+            transform: translate(-50%, -50%) rotate(16deg); // Rotates the div around its own axis
+            top: 122%;
+            left: 21%;
+        }
+    }
+}

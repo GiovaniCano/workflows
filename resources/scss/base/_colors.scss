@@ -1,0 +1,27 @@
+$mint-0: #D4E6E0;
+$mint-1: #BAD6CD;
+$mint-gradient-r: radial-gradient(circle, transparentize($mint-0, .4), transparentize($mint-1, .4));
+$mint-gradient-l: linear-gradient(to bottom, $mint-0, $mint-1);
+$mint-gradient-l-transparent: linear-gradient(to bottom, transparentize($mint-0, 0.25), transparentize($mint-1, 0.25));
+$mint-gradient-l-dark: linear-gradient(to bottom, darken($mint-0, 5%), darken($mint-1, 5%));
+
+$bg-0: #999E9F;
+$bg-1: #797D7E;
+$bg-gradient-r: radial-gradient(ellipse farthest-corner, $bg-0, $bg-1);
+
+$blue-0: #025C99;
+$blue-1: #013C64;
+$blue-gradient-l: linear-gradient(to bottom, $blue-0, $blue-1);
+$blue-gradient-l-dark: linear-gradient(to bottom, darken($blue-0, 5%), darken($blue-1, 5%));
+
+$light-grey-0: rgba(196, 197, 202, 70%);
+$light-grey-1: rgba(180, 182, 191, 70%);
+$light-grey-gradient-l: linear-gradient(to bottom, $light-grey-0, $light-grey-1);
+
+$purple-0: #C699E8;
+$purple-1: #013C64;
+$purple-gradient-l: linear-gradient(to bottom, $purple-0, $purple-1);
+$purple-gradient-l-dark: linear-gradient(to bottom, darken($purple-0, 5%), darken($purple-1, 5%));
+$purple-2: #8834C8;
+
+$error: rgb(100, 35, 35);

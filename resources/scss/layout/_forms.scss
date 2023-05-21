@@ -1,0 +1,92 @@
+@use '../base/variables' as v;
+@use '../base/colors' as c;
+@use '../base/helpers' as h;
+
+.is-invalid {
+  border-color: c.$error !important;
+}
+
+.form {
+  @extend .grey-container;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+
+  .btn {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-weight: normal;
+    margin: 0;
+    margin-top: -0.4rem;
+    margin-bottom: -0.4rem;
+  }
+}
+
+.form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid c.$blue-1;
+  outline: none;
+
+  &::placeholder {
+    color: transparentize(c.$blue-1, .45);
+  }
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] { // hide default
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    margin: 0;
+  }
+
+  input[type="checkbox"] {
+    height: 1.3rem;
+    width: 1.3rem;
+    border: 2px solid c.$blue-1;
+    border-radius: 6px;
+    background-color: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:checked {
+      background-color: c.$blue-1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: '';
+        background-color: c.$bg-0;
+        height: 75%;
+        width: 75%;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      }
+    }
+  }
+
+  label {
+    margin-top: 2px;
+    margin-left: .5rem;
+    font-size: 16px;
+    &[for] {
+      cursor: pointer;
+    }
+  }
+}
+
+.error-feedback {
+  color: c.$error;
+  font-size: 16px;
+  margin-top: 3px;
+}
