@@ -17,8 +17,8 @@ class WysiwygFactory extends Factory
     public function definition(): array
     {
         $content = '';
-        $content .= "<h2>".fake()->title()."</h2>";
-        foreach (fake()->paragraphs(10) as $p) {
+        $content .= "<h3>".fake()->sentence(4)."</h3>";
+        foreach (fake()->paragraphs(rand(3,6)) as $p) {
             $content .= "<p>{$p}</p>";
         }
 

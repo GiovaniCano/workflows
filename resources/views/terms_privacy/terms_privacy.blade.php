@@ -1,4 +1,4 @@
-@extends('app', ['title' => $title, 'show_header' => true])
+@extends('app', ['title' => $title])
 
 @section('content')
     <div class="container grey-container m-b-2">

@@ -24,6 +24,7 @@ class User extends Authenticatable implements HasLocalePreference
         'email',
         'password',
         'locale',
+        'last_used_workflow_id',
     ];
 
     /**

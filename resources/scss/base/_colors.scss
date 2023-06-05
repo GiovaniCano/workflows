@@ -17,6 +17,7 @@ $blue-gradient-l-dark: linear-gradient(to bottom, darken($blue-0, 5%), darken($b
 $light-grey-0: rgba(196, 197, 202, 70%);
 $light-grey-1: rgba(180, 182, 191, 70%);
 $light-grey-gradient-l: linear-gradient(to bottom, $light-grey-0, $light-grey-1);
+$light-grey-gradient-l-dark: linear-gradient(to bottom, lighten($light-grey-0, 5%), lighten($light-grey-1, 5%));
 
 $purple-0: #C699E8;
 $purple-1: #013C64;

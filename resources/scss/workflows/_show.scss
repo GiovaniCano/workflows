@@ -1,0 +1,145 @@
+@use '../base/colors' as c;
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.workflow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .8rem .8rem;
+    @include m.sm {
+        padding: .8rem 1.8rem;
+    }
+    h1 {
+        margin: 0;
+        font-size: 30px;
+        font-weight: normal;
+    }
+    margin: 2rem 0;
+}
+
+.section-main, .section-mini {
+    margin-top: 2rem;
+    padding: 0;
+    h2 {
+        font-size: 26px;
+        margin: 0;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+    header {
+        padding: .4rem .8rem;
+        background: c.$light-grey-gradient-l;
+        border-radius: v.$border-radius-md v.$border-radius-md 0 0;
+        @include m.sm {
+            padding: .4rem 1.3rem;
+        }
+    }
+    >div {
+        padding: .5rem 0 1.7rem 0;
+    }
+}
+.section-mini {
+    max-width: 900px;
+    margin: 0;
+    div {
+        padding-bottom: .5rem;
+    }
+}
+
+.section-nested {
+    @extend .section-main;
+
+    margin: 0 0 1.2rem 4px;
+    @include m.sm {
+        margin: 0 4px 1.2rem 12px;
+    }
+
+    box-shadow: none;
+    // background: unset;
+    backdrop-filter: unset;
+    border-bottom: 10px solid c.$light-grey-1;
+    border-radius: 0;
+    header {
+        border-radius: 0;
+        // transition: background .8s ease-in-out;
+    }
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+    >div {
+        padding-bottom: 0;
+    }
+
+    // &:hover {
+    &.section-hover {
+        // $transparent: .76;
+        // background: transparentize($color: c.$mint-0, $amount: $transparent);
+        background: lighten($color: c.$light-grey-0, $amount: 0.1%);
+        // border-color: transparentize($color: c.$mint-0, $amount: $transparent);
+        border-color: lighten($color: c.$light-grey-0, $amount: 0.1%);
+        >header {
+            // background: transparentize($color: c.$mint-0, $amount: $transparent);
+            background: lighten($color: c.$light-grey-0, $amount: 0.1%);
+            // transition: background .8s ease-in-out;
+        }
+        &.section-hover-disabled {
+            background: inherit;
+            border-color: c.$light-grey-1;
+            >header {
+                background: inherit;
+                // transition: background .8s ease-in-out;
+            }
+            // transition: background .1s ease-in-out, border-color .8s ease-in-out;
+        }
+        // transition: background .1s ease-in-out, border-color .8s ease-in-out;
+    }
+    // transition: background .1s ease-in-out, border-color .8s ease-in-out;
+}
+
+.container-images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    gap: .8rem;
+    flex-wrap: wrap;
+    img {
+        max-height: 186px;
+        box-shadow: v.$shadow-sm;
+        border-radius: 8px;
+        cursor: zoom-in;
+        transition: scale .25s ease-in-out;
+        &:hover {
+            scale: 1.025;
+            transition: scale .25s ease-in-out;
+        }
+    }
+}
+.wysiwyg-content {
+    padding: 0 1rem;
+}
+.container-sections {
+    display: flex;
+    padding: 0 1rem;
+    >div {
+        width: 100%;
+        margin: 0 1rem;
+        .mini-section-btn {
+            background: c.$light-grey-gradient-l-dark;
+            border: none;
+            font-size: 26px;
+            padding: 10px;
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+            color: c.$blue-1;
+            cursor: pointer;
+            transition: scale .25s ease-in-out;
+            &:hover {
+                scale: 1.025;
+                transition: scale .25s ease-in-out;
+            }
+        }
+    }
+}

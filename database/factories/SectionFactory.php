@@ -17,7 +17,7 @@ class SectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(rand(2,6), false),
+            'name' => substr(fake()->sentence(rand(2,6), false), 0, 25),
             // 'type' =>
             // 'user_id' =>
         ];

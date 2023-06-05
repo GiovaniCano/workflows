@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Database\Factories\SectionFactory;
+use Illuminate\Database\Eloquent\Builder;
 
 class Workflow extends Section
 {
@@ -13,10 +13,16 @@ class Workflow extends Section
         'type' => 0,
     ];
 
-    public function make_slug() {
-        $slug = Str::slug($this->name);
-        if(strlen($slug) > 255) $slug = substr($slug, 0, 255);
-        return $slug;
+    protected $with = ['sections'];
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('workflow_type', function (Builder $builder) {
+            $builder->where('type', 0);
+        });
     }
 
     /**
@@ -28,9 +34,9 @@ class Workflow extends Section
      */
     public function setAttribute($key, $value)
     {
-        if($key !== 'type') parent::setAttribute($key, $value);
+        if ($key !== 'type') parent::setAttribute($key, $value);
     }
-    
+
     /**
      * Create a new factory instance for the model.
      *
@@ -39,5 +45,24 @@ class Workflow extends Section
     protected static function newFactory()
     {
         return SectionFactory::new();
+    }
+
+    /**
+     * Workflows can not have images
+     */
+    public function images() {
+        abort(500, 'Workflows can not have images');
+    }
+    /**
+     * Workflows can not have wysiwygs
+     */
+    public function wysiwygs() {
+        abort(500, 'Workflows can not have wysiwygs');
+    }
+    /**
+     * Workflows can only have sections
+     */
+    public function getAllContent() {
+        abort(500, 'Workflows can only have sections');
     }
 }

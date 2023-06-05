@@ -15,11 +15,15 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: $font-highlight;
     margin-top: 0;
-    font-weight: normal;
 }
 h1 {
-    font-weight: bold;
     text-align: center;
+}
+h2 {
+    font-weight: normal;
+}
+h3 {
+    font-size: 22px;
 }
 
 .brand-text {
@@ -35,6 +39,9 @@ h1 {
 
 .font-title {
     font-family: $font-highlight;
+}
+.font-base {
+    font-family: $font-base;
 }
 
 .btn {

@@ -2,20 +2,14 @@
 
 @section('content')
     <div class="container m-b-2">
-        <h1>Show</h1>
-        <a class="btn btn-primary" href="{{route('workflow.edit', ['workflow' => $workflow, 'slug' => $workflow->make_slug()])}}">Edit</a>
+        <header class="workflow-header grey-container">
+            <h1>{{ $workflow->name }}</h1>
+            <a class="btn btn-primary" href="{{route('workflow.edit', ['workflow' => $workflow, 'slug' => $workflow->make_slug()])}}">{{ __('Edit') }}</a>
+        </header>
 
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
+        {{-- main sections --}}
+        @foreach ($workflow->sections as $section)
+            <x-workflows.section :$section class="section-main"></x-workflows.section>
+        @endforeach
     </div>
 @endsection

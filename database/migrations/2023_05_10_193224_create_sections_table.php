@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name')->comment('Unique if type is 0');
+            $table->string('name', 25)->comment('Unique if type is 0');
             $table->unsignedTinyInteger('type')->comment('0, 1 or 2');
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 

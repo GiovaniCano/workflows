@@ -1,19 +1,7 @@
-@extends('app', ['show_sidebar' => true])
+@extends('app', ['show_sidebar' => true, 'class' => 'main-center main-100vh'])
 
 @section('content')
     <div class="container m-b-2">
-        <h1>Workflows Index</h1>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae omnis, id vero labore praesentium aut, illo, est assumenda ducimus ipsum libero nihil nobis nulla dolores quas! Maiores veniam autem quam?</p>
+        <a class="align-center btn btn-secondary" href="{{ route('workflow.create') }}">{{ __('workflows.create-first') }}</a>
     </div>
 @endsection

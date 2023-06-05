@@ -20,10 +20,6 @@
 
     &.brand-big {
         flex-direction: column;
-        margin-top: 2rem;
-        @include m.lg {
-            margin-top: 0;
-        }
 
         .logo-container {
             height: 50px;

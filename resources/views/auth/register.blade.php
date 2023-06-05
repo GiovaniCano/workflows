@@ -1,4 +1,4 @@
-@extends('app', ['title' => __('Register'), 'class' => 'main-center main-100vh'])
+@extends('app', ['title' => __('Register'), 'hide_brand' => true, 'class' => 'main-center main-100vh'])
 
 @section('meta')
     <x-meta title="Register" desckey="register" route="register"/>

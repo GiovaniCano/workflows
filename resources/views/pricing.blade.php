@@ -1,4 +1,4 @@
-@extends('app', ['title' => 'Pricing', 'show_header' => true])
+@extends('app', ['title' => 'Pricing'])
 
 @section('content')
     <h1>Pricing</h1>

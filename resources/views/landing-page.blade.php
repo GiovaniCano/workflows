@@ -1,4 +1,4 @@
-@extends('app', ['show_header' => true, 'hide_brand' => true])
+@extends('app', ['hide_brand' => true])
 
 @section('meta')
     <x-meta desckey="landing" route="landing-page"/>

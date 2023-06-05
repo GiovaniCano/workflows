@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" class="custom-scrollbar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +25,8 @@
     @stack('css')
     @stack('js')
 </head>
-<body>
-    @includeWhen($show_header ?? false, 'layout.header', ['hide_brand' => $hide_brand ?? false])
+<body class="custom-scrollbar">
+    @include('layout.header', ['hide_brand' => $hide_brand ?? false, 'sidebar' => $show_sidebar ?? false])
 
     <div id="content">
         @auth
@@ -39,7 +39,11 @@
     </div>
     
     @include('layout.footer')
+
+    @stack('modals')
     
     @include('layout.background')
+
+    @stack('templates')
 </body>
 </html>

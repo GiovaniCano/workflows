@@ -7,6 +7,11 @@ use App\Http\Requests\WorkflowRequest;
 
 class WorkflowController extends Controller
 {
+    public function __construct()
+    {   
+        $this->authorizeResource(Workflow::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -54,6 +59,7 @@ class WorkflowController extends Controller
      */
     public function show(Workflow $workflow)
     {
+        request()->user()->update(['last_used_workflow_id' => $workflow->id]);
         return view('workflows.show', compact('workflow'));
     }
 
@@ -62,6 +68,7 @@ class WorkflowController extends Controller
      */
     public function edit(Workflow $workflow)
     {
+        request()->user()->update(['last_used_workflow_id' => $workflow->id]);
         return view('workflows.form', compact('workflow'));
     }
 
@@ -78,6 +85,6 @@ class WorkflowController extends Controller
      */
     public function destroy(Workflow $workflow)
     {
-        //
+        dd($workflow);
     }
 }
