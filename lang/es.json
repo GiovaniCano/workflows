@@ -65,5 +65,9 @@
 
     "Profile": "Perfil",
     "Payment": "Pagos",
-    "Edit": "Editar"
+    "Edit": "Editar",
+
+    "Save": "Guardar",
+    "Cancel": "Cancelar",
+    "Delete": "Eliminar"
 }

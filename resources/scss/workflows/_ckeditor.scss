@@ -1,0 +1,24 @@
+@use '../base/colors' as c;
+@use '../base/variables' as v;
+
+:root {
+    --ck-border-radius: 8px !important;
+    --ck-color-base-background: transparent !important;
+}
+
+.ck-editor {
+    box-shadow: v.$shadow-sm;
+    border-radius: var(--ck-border-radius);
+}
+
+.ck-editor__top {
+    background-color: c.$wysiwyg !important;
+}
+
+.ck-toolbar__separator {
+    background-color: c.$blue-1 !important;
+}
+
+#workflow-form .wysiwyg-content {
+    background-color: c.$wysiwyg;
+}

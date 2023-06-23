@@ -9,7 +9,14 @@
 
         {{-- main sections --}}
         @foreach ($workflow->sections as $section)
-            <x-workflows.section :$section class="section-main"></x-workflows.section>
+            <x-workflows.section :$section class="section-main" />
         @endforeach
     </div>
 @endsection
+
+@push('templates')
+    {{-- modal --}}
+    <script id="modal-template" type="text/template">
+        <x-modal/>
+    </script>
+@endpush

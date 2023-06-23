@@ -10,16 +10,29 @@
     @include m.sm {
         padding: .8rem 1.8rem;
     }
-    h1 {
+    h1, .h1 {
         margin: 0;
         font-size: 30px;
         font-weight: normal;
+        text-align: left;
+        width: auto;
     }
     margin: 2rem 0;
+    .btn {
+        margin-left: 8px;
+    }
+}
+.section-header {
+    margin: 0;
 }
 
+.section-main {
+    margin-top: 3rem;
+    &:first-of-type {
+        margin-top: 2rem;
+    }
+}
 .section-main, .section-mini {
-    margin-top: 2rem;
     padding: 0;
     h2 {
         font-size: 26px;
@@ -30,23 +43,18 @@
         }
     }
     header {
-        padding: .4rem .8rem;
+        padding: .4rem;
         background: c.$light-grey-gradient-l;
         border-radius: v.$border-radius-md v.$border-radius-md 0 0;
-        @include m.sm {
-            padding: .4rem 1.3rem;
-        }
     }
+
     >div {
-        padding: .5rem 0 1.7rem 0;
+        padding-bottom: .5rem;
     }
 }
 .section-mini {
     max-width: 900px;
     margin: 0;
-    div {
-        padding-bottom: .5rem;
-    }
 }
 
 .section-nested {
@@ -58,49 +66,22 @@
     }
 
     box-shadow: none;
-    // background: unset;
     backdrop-filter: unset;
     border-bottom: 10px solid c.$light-grey-1;
     border-radius: 0;
     header {
         border-radius: 0;
-        // transition: background .8s ease-in-out;
     }
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
     >div {
         padding-bottom: 0;
     }
-
-    // &:hover {
-    &.section-hover {
-        // $transparent: .76;
-        // background: transparentize($color: c.$mint-0, $amount: $transparent);
-        background: lighten($color: c.$light-grey-0, $amount: 0.1%);
-        // border-color: transparentize($color: c.$mint-0, $amount: $transparent);
-        border-color: lighten($color: c.$light-grey-0, $amount: 0.1%);
-        >header {
-            // background: transparentize($color: c.$mint-0, $amount: $transparent);
-            background: lighten($color: c.$light-grey-0, $amount: 0.1%);
-            // transition: background .8s ease-in-out;
-        }
-        &.section-hover-disabled {
-            background: inherit;
-            border-color: c.$light-grey-1;
-            >header {
-                background: inherit;
-                // transition: background .8s ease-in-out;
-            }
-            // transition: background .1s ease-in-out, border-color .8s ease-in-out;
-        }
-        // transition: background .1s ease-in-out, border-color .8s ease-in-out;
-    }
-    // transition: background .1s ease-in-out, border-color .8s ease-in-out;
 }
 
 .container-images {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     margin: 0 1rem;
     gap: .8rem;
     flex-wrap: wrap;
@@ -117,15 +98,24 @@
     }
 }
 .wysiwyg-content {
-    padding: 0 1rem;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
 }
 .container-sections {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: .8rem;
     padding: 0 1rem;
-    >div {
+    @include m.sm {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        place-items: center;
+    }
+
+    .mini-section-btn-wrapper {
         width: 100%;
-        margin: 0 1rem;
         .mini-section-btn {
+            min-height: 50px;
             background: c.$light-grey-gradient-l-dark;
             border: none;
             font-size: 26px;
@@ -140,6 +130,7 @@
                 scale: 1.025;
                 transition: scale .25s ease-in-out;
             }
+            box-shadow: v.$shadow-sm;
         }
     }
 }

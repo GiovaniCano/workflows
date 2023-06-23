@@ -65,5 +65,9 @@
 
     "Profile": "Profile",
     "Payment": "Payment",
-    "Edit": "Edit"
+    "Edit": "Edit",
+
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "Delete": "Delete"
 }

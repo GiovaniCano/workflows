@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="locale" content="{{ app()->getLocale() }}">
+
     @yield('meta')
 
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
@@ -20,10 +23,9 @@
  
     {{-- jquery --}}
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-
-    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+    
+    @vite(['resources/scss/app.scss'])
     @stack('css')
-    @stack('js')
 </head>
 <body class="custom-scrollbar">
     @include('layout.header', ['hide_brand' => $hide_brand ?? false, 'sidebar' => $show_sidebar ?? false])
@@ -45,5 +47,8 @@
     @include('layout.background')
 
     @stack('templates')
+
+    @vite(['resources/js/app.js'])
+    @stack('js')
 </body>
 </html>

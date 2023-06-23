@@ -19,10 +19,12 @@ $light-grey-1: rgba(180, 182, 191, 70%);
 $light-grey-gradient-l: linear-gradient(to bottom, $light-grey-0, $light-grey-1);
 $light-grey-gradient-l-dark: linear-gradient(to bottom, lighten($light-grey-0, 5%), lighten($light-grey-1, 5%));
 
-$purple-0: #C699E8;
-$purple-1: #013C64;
-$purple-gradient-l: linear-gradient(to bottom, $purple-0, $purple-1);
-$purple-gradient-l-dark: linear-gradient(to bottom, darken($purple-0, 5%), darken($purple-1, 5%));
-$purple-2: #8834C8;
+$purple-0: #cfb1e7;
+$purple-1: #965cc2;
+$purple-2: hsl(274, 55%, 66%);
+$purple-gradient-l: linear-gradient(to bottom, $purple-0, $purple-2);
+$purple-gradient-l-dark: linear-gradient(to bottom, darken($purple-0, 5%), darken($purple-2, 5%));
 
 $error: rgb(100, 35, 35);
+
+$wysiwyg: rgba(221, 221, 221, 0.7);

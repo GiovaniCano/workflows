@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Workflow;
 use App\Http\Requests\WorkflowRequest;
+use App\Models\Image;
+use App\Models\Section;
+use App\Models\Wysiwyg;
 
 class WorkflowController extends Controller
 {
@@ -51,7 +54,7 @@ class WorkflowController extends Controller
      */
     public function store(WorkflowRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -68,8 +71,20 @@ class WorkflowController extends Controller
      */
     public function edit(Workflow $workflow)
     {
+        $templatesModels = [
+            'section' => new Section([
+                'type' => 1,
+                'name' => '',
+            ]),
+            'minisection' => new Section([
+                'type' => 2,
+                'name' => '',
+            ]),
+            'image' => new Image,
+            'wysiwyg' => new Wysiwyg,
+        ];
         request()->user()->update(['last_used_workflow_id' => $workflow->id]);
-        return view('workflows.form', compact('workflow'));
+        return view('workflows.form', compact('workflow', 'templatesModels'));
     }
 
     /**
@@ -77,7 +92,7 @@ class WorkflowController extends Controller
      */
     public function update(WorkflowRequest $request, Workflow $workflow)
     {
-        //
+        dd($request);
     }
 
     /**

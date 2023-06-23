@@ -17,12 +17,12 @@
 
 @else
 
-    <input class="form-control m-t-2 @error($name) is-invalid @enderror" 
+    <input
         type="{{ $type }}" 
         name="{{ $name }}" 
         placeholder="{{ __($placeholder) }}"
         value="{{ $type === 'password' ? '' : old($name, $value) }}" 
-        {{ $attributes }} 
+        {{ $attributes->class(['form-control', 'is-invalid' => $errors->has($name)]) }} 
     >
     @error($name)
         <span class="error-feedback">{{$message}}</span>

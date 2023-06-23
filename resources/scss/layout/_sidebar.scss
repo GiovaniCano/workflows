@@ -117,7 +117,7 @@ aside#sidebar {
         box-shadow: v.$shadow-sm;
         li {
             color: inherit;
-            &:hover {
+            &:not(.separator):hover {
                 background: c.$mint-gradient-l-dark;
             }
             button, input {

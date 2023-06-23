@@ -25,21 +25,21 @@ class DatabaseSeeder extends Seeder
 
         Workflow::factory(2)->state(['type'=>0,'user_id'=>$user_id]) // 2 workflows per user
             ->hasAttached( 
-                Section::factory(3)->state(['type'=>1,'user_id'=>$user_id]) // 3 sections per workflow
+                Section::factory(2)->state(['type'=>1,'user_id'=>$user_id]) // 3 sections per workflow
                     ->hasAttached(Wysiwyg::factory(1), ['position'=>0])
                     ->hasAttached(Image::factory(3), new Sequence(['position'=>1],['position'=>2],['position'=>3]))
                     ->hasAttached(
                         Section::factory(2)->state(['type'=>1,'user_id'=>$user_id]) // 2 sections per section
-                            ->hasAttached(Wysiwyg::factory(2), new Sequence(['position'=>0],['position'=>1]))
+                            ->hasAttached(Wysiwyg::factory(1), new Sequence(['position'=>0]))
                             ->hasAttached(
-                                Section::factory(2)->state(['type'=>2,'user_id'=>$user_id]) // 2 mini sections per section
+                                Section::factory(3)->state(['type'=>2,'user_id'=>$user_id]) // 3 mini sections per section
                                     ->hasAttached(Wysiwyg::factory(1), new Sequence(['position'=>0])),
-                                new Sequence(['position'=>2],['position'=>3])
+                                new Sequence(['position'=>1],['position'=>2],['position'=>3])
                             ),
                         new Sequence(['position'=>4],['position'=>5])
-                    )
-                    ->hasAttached(Wysiwyg::factory(1), ['position'=>6]),
-                new Sequence(['position'=>0],['position'=>1],['position'=>2])
+                    ),
+                    // ->hasAttached(Wysiwyg::factory(1), ['position'=>6]),
+                new Sequence(['position'=>0],['position'=>1])
             )
             ->create();
     }

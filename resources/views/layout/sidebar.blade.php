@@ -39,14 +39,8 @@
                     <ol class="unstyled-list">
                         @foreach ($workflow->sections as $main_section)
                             <li class="m-b-1">
-                                <a 
-                                    href="#{{ $main_section->id . '-' . $main_section->make_slug() }}" 
-                                    title="{{ $main_section->name }}" 
-                                    {{-- class="current" --}}
-                                >
-                                    # {{ Str::limit($main_section->name, 18) }}
-                                </a>
-
+                                <x-workflows.sidebar-el :section="$main_section" :maxlen="18" />
+                                
                                 {{-- nested sections --}}
                                 @if (count($main_section->sections))
                                     @php
@@ -55,13 +49,7 @@
                                     <ol class="unstyled-list">
                                         @foreach ($nested_sections as $nested_section)
                                             <li>
-                                                <a 
-                                                    href="#{{ $nested_section->id . '-' . $nested_section->make_slug() }}" 
-                                                    title="{{ $nested_section->name }}" 
-                                                    {{-- class="current" --}}
-                                                >
-                                                    # {{ Str::limit($nested_section->name, 15) }}
-                                                </a>
+                                                <x-workflows.sidebar-el :section="$nested_section" :maxlen="15" />
                                             </li>
                                         @endforeach
                                     </ol>
@@ -76,11 +64,13 @@
         <div class="separator separator-nomargin"></div>
     
         <footer>
-            <nav>
-                <ul id="profile-menu" class="unstyled-list" style="display: none">
+            <nav id="profile-menu" style="display: none">
+                <ul class="unstyled-list">
                     <li><a href="{{ route('user.profile') }}">{{ __('Profile') }}</a></li>
                     <li><a href="{{ route('user.payment') }}">{{ __('Payment') }}</a></li>
-                    <div class="separator"></div>
+
+                    <li class="separator"></li>
+
                     <li>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
@@ -90,7 +80,7 @@
                 </ul>
             </nav>
             
-            <button id="profile-btn" class="btn-sidebar" title="{{ auth()->user()->name }}">
+            <button id="profile-btn" class="btn-sidebar" title="{{ auth()->user()->name }}" type="button">
                 {{ Str::limit(auth()->user()->name, 15) }}
             </button>
         </footer>

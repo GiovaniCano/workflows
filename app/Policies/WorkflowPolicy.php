@@ -48,7 +48,7 @@ class WorkflowPolicy
     public function delete(User $user, Workflow $workflow): bool
     {
         $this->ensureIsWorkflow($workflow);
-        // return $workflow->user_id = $user->id;
+        return $workflow->user_id = $user->id;
     }
 
 

@@ -1,0 +1,311 @@
+@use '../base/variables' as v;
+@use '../base/colors' as c;
+@use '../base/mixins' as m;
+@use '../base/typography' as t;
+@use '../base/zindex' as z;
+
+#workflow-form header {
+    flex-direction: column-reverse;
+    >div {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .25rem;
+        flex-wrap: wrap;
+        .btn {
+            white-space: nowrap;
+        }
+    }
+    @include m.sm {
+        flex-direction: row;
+        >div {
+            margin-bottom: 0;
+        }
+    }
+    @include m.lg {
+        >div {
+            gap: 1rem;
+        }
+    }
+}
+
+#workflow-form {
+    .form-control, .form-control{
+        width: auto;
+        border-color: c.$purple-1;
+    }
+
+    .wysiwyg-content {
+        padding: 0;
+        margin: 0 1rem 1rem 1rem;
+        border-radius: 8px;
+        
+        .wysiwyg-content-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+        }
+        
+        box-shadow: v.$shadow-sm;
+        .ck-editor {
+            box-shadow: none;
+        }
+    }
+    
+    .section-header {
+        display: grid;
+        grid-template-areas: "drag delete"
+                             "input input";
+        .btn-drag {
+            grid-area: drag;
+            margin: 0 auto 0 0;
+        }
+        .btn-delete {
+            grid-area: delete;
+            margin: 0 0 0 auto;
+        }
+        input {
+            grid-area: input;
+        }
+        @include m.sm {
+            display: flex;
+            .btn-drag {
+                margin-right: 1rem;
+            }
+        }
+    }
+}
+
+/* drag button */
+.btn-drag {
+    z-index: z.$drag-and-delete-buttons;
+    background-color: lighten($color: c.$purple-1, $amount: 15%);
+    border-radius: 6px;
+    height: 34px;
+    border: 1px solid transparentize($color: c.$blue-1, $amount: .7);
+    box-shadow: v.$shadow-sm;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    cursor: move;
+    svg {
+        height: 34px;
+        width: 40px;
+        stroke: transparentize(c.$blue-1, .2);
+    }
+    transition: scale .1s ease-in-out, background-color .25s ease-in-out;
+    &:hover {
+        background-color: lighten($color: c.$purple-1, $amount: 20%);
+        scale: 1.02;
+        transition: scale .1s ease-in-out, background-color .25s ease-in-out;
+    }
+    
+    @include m.lg {
+        height: 30px;
+        svg {
+            height: 30px;
+            width: 37px;
+            stroke: transparentize(c.$blue-1, .2);
+        }
+    }
+}
+#workflow-form {
+    .img {
+        .btn-drag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 5px;
+        }
+    }
+    .mini-section-btn-wrapper {
+       .btn-drag {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-left: 10px;
+            transform: translateY(-50%);
+       } 
+    }
+}
+
+/* delete button */
+.btn-delete {
+    z-index: z.$drag-and-delete-buttons;
+    background-color: lighten($color: c.$purple-1, $amount: 15%);
+    border: 1px solid transparentize($color: c.$blue-1, $amount: .7);
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    border-radius: 90px;
+    display: flex;
+    cursor: pointer;
+    box-shadow: v.$shadow-sm;
+    transition: scale .1s ease-in-out, background-color .25s ease-in-out;
+    &:hover {
+        background-color: lighten($color: c.$purple-1, $amount: 20%);
+        scale: 1.02;
+        transition: scale .1s ease-in-out, background-color .25s ease-in-out;
+    }
+    svg {
+        width: 100%;
+        height: 100%;
+        stroke: transparentize(c.$blue-1, .4);
+    }
+    @include m.lg {
+        width: 34px;
+        height: 34px;
+    }
+}
+#workflow-form {
+    .img {
+        position: relative;
+        .btn-delete {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 5px;
+        }
+    }
+    .mini-section-btn-wrapper {
+        position: relative;
+       .btn-delete {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            margin-right: 10px;
+       } 
+    }
+}
+
+/* add button */
+#workflow-form .btn-add {
+    position: relative; // to don't be over the menu
+    z-index: z.$add-button;
+    font-family: t.$font-base;
+    font-size: 28px;
+    background-color: lighten($color: c.$purple-1, $amount: 15%);
+    color: transparentize(c.$blue-1, .4);
+    font-weight: bold;
+    width: 100%;
+    max-width: 400px;
+    margin: 1.5rem auto;
+    cursor: pointer;
+    display: block;
+    border: 1px solid transparentize($color: c.$blue-1, $amount: .7);
+    padding: .1rem;
+    border-radius: 6px;
+    box-shadow: v.$shadow-sm;
+    transition: scale .1s ease-in-out, background-color .25s ease-in-out;
+    &:hover {
+        background-color: lighten($color: c.$purple-1, $amount: 20%);
+        scale: 1.02;
+        transition: scale .1s ease-in-out, background-color .25s ease-in-out;
+    }
+    min-height: 40px;
+    @include m.md {
+        min-height: auto;
+    }
+}
+#workflow-form {
+    >.btn-add-wrapper{
+        margin: 3rem auto;
+        .btn-add {
+            margin: 0 auto;
+        }
+    }
+
+    .btn-add-wrapper {
+        position: relative;
+        ul.btn-add-menu {
+            z-index: z.$add-menu;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 150px;
+            transform: translate(-50%, -50%);
+            background-color: c.$purple-0;
+            border-radius: 8px;
+            box-shadow: v.$shadow-sm;
+            border: 1px solid transparentize($color: c.$blue-0, $amount: .6);
+            li {
+                border-bottom: 1px solid transparentize($color: c.$blue-0, $amount: .6);
+                &:last-of-type {
+                    border-bottom: none;
+                    button {
+                        border-radius: 0 0 8px 8px;
+                    }
+                }
+                &:first-of-type button{
+                    border-radius: 8px 8px 0 0;
+                }
+            }
+            button {
+                color: c.$blue-0;
+                background-color: transparent;
+                border: none;
+                padding: 0 5px;
+                margin: 0;
+                width: 100%;
+                height: 40px;
+                @include m.lg {
+                    height: 32px;
+                }
+
+                transition: background-color .25s ease-in-out;
+                &:hover {
+                    cursor: pointer;
+                    background-color: lighten(c.$purple-0, 6%);
+                    transition: background-color .25s ease-in-out;
+                }
+            }
+        }
+    }
+
+    .container-sections {
+        .btn-add-wrapper {
+            margin: 0.4rem 0;
+            .btn-add {
+                margin: 0 auto;
+                max-width: 150px;
+            }
+        }
+        @include m.sm {
+            grid-template-columns: 1fr 0% 1fr;
+            row-gap: .5rem;
+            .btn-add-wrapper:nth-child(4n) {
+                grid-column: span 3;
+                width: 100%;
+                .btn-add {
+                    margin: 0 auto;
+                }
+            }
+            .btn-add-wrapper:not(:nth-child(4n)) .btn-add {
+                width: 40px;
+                height: 40px;
+                margin: 0;
+                border-radius: 90px;
+
+                &:hover {
+                    scale: 1.06;
+                }
+            }
+        }
+    }
+
+    .container-images {
+        position: relative;
+        .btn-add {
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            border-radius: 90px;
+            
+            &:hover {
+                scale: 1.06;
+            }
+        }
+    }
+}

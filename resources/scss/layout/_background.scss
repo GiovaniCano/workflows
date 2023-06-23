@@ -38,7 +38,7 @@
         &:nth-of-type(2) {
             height: $base_size * 2.4;
             width: $base_size * 2.4;
-            transform: translate(-50%, -50%) rotate(-61deg); // Rotates the div around its own axis
+            transform: translate(-50%, -50%) rotate(-61deg);
             top: 21% - 15%;
             left: 98%;
             @include m.sm {
@@ -50,7 +50,7 @@
         &:nth-of-type(3) {
             height: $base_size * 1.8;
             width: $base_size * 1.8;
-            transform: translate(-50%, -50%) rotate(-124deg); // Rotates the div around its own axis
+            transform: translate(-50%, -50%) rotate(-124deg);
             top: 62%;
             left: 87%;
             @include m.sm {
@@ -62,7 +62,7 @@
         &:nth-of-type(4) {
             height: $base_size * 4;
             width: $base_size * 4;
-            transform: translate(-50%, -50%) rotate(16deg); // Rotates the div around its own axis
+            transform: translate(-50%, -50%) rotate(16deg);
             top: 110%;
             left: 21%;
             @include m.sm {

@@ -30,6 +30,8 @@
   border: none;
   border-bottom: 2px solid c.$blue-1;
   outline: none;
+  width: 100%;
+  margin-top: 2rem;
 
   &::placeholder {
     color: transparentize(c.$blue-1, .45);
