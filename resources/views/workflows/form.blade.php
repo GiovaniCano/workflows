@@ -42,11 +42,15 @@
 
 @push('js')
     {{-- CKEditor --}}
-    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/js/ckeditor/ckeditor.js"></script>
     @if (app()->getLocale() !== 'en')
-        <script src="/ckeditor/translations/{{ app()->getLocale() }}.js"></script>
+        <script src="/js/ckeditor/translations/{{ app()->getLocale() }}.js"></script>
     @endif
 
+    {{-- jQuery UI --}}
+    <script src="/js/jquery/jquery-ui.min.js"></script>
+
+    {{-- form --}}
     <script>
         /* submit delete workflow form */
         function submitDeleteWorkflowForm() {

@@ -1,6 +1,7 @@
 import { generateUniqueId } from "../_helpers"
+import { droppableOptionsBase } from "../_jquery_ui"
 import { initializeImage } from "./_images"
-import { initializeSection, createSidebarSectionItem, initializeMiniSectionButton, addSectionToSidebar } from "./_sections"
+import { initializeSection, initializeMiniSectionButton, addSectionToSidebar } from "./_sections"
 import { initializeWysiwyg } from "./_wysiwygs"
 
 /**
@@ -57,17 +58,7 @@ export function insertDeleteButton(element) {
         }
 
         // merge containers
-        if(
-            target.prev().prev().is('.container-images') && target.next().next().is('.container-images') || 
-            target.prev().prev().is('.container-sections') && target.next().next().is('.container-sections')
-        ) {
-            const container1 = target.prev().prev('.container-form')
-            const container2 = target.next().next('.container-form')
-            insertAddButton(container1.children().last())
-            container1.append(container2.children())
-            container2.next('.btn-add-wrapper').remove()
-            container2.remove()
-        }
+        mergeSurroundingContainers(target)
 
         target.next('.btn-add-wrapper').remove()
         target.remove()
@@ -83,16 +74,12 @@ export function insertDeleteButton(element) {
  */
 export function insertDragButton(element) {
     const btn = $(`
-        <button type="button" class="btn-drag" tabindex="-1">
+        <span class="btn-drag" tabindex="-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="#965cc2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M5 15m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 15m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 15m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
             </svg>
-        </button>
+        </span>
     `)
-    btn.on('click', function() {
-        const target = $(this).closest('.js-action-target')
-        console.log(target)
-    })
 
     element.prepend(btn)
 }
@@ -105,15 +92,15 @@ export function insertDragButton(element) {
 export function insertAddButton(element) {
     if(element.hasClass('section-mini')) return
 
-    const insideMniniSection = Boolean(element.closest('.section-mini').length)
+    const isInsideMiniSection = Boolean(element.closest('.section-mini').length)
 
     const addButtonHtml = ''.concat(
         `
             <div class="btn-add-wrapper">
-                <button type="button" class="btn-add">+</button>
+                <button type="button" class="btn-add droppable">+</button>
                 <ul class="unstyled-list btn-add-menu" style="display:none">`
                 ,
-                insideMniniSection ? '' : `
+                isInsideMiniSection ? '' : `
                     <li><button type="button" class="js-btnadd-section">Section</button></li>
                     <li><button type="button" class="js-btnadd-minisection">Mini Section</button></li>`
                 ,
@@ -146,27 +133,9 @@ export function insertAddButton(element) {
         input.attr('data-id', id)
         input.attr('id', id + '-')
 
-        if(addButton.parent().is('.container-form')) {
-            splitContainer(addButton)
-        }
+        insertSectionOrWysiwyg(addButton, sectionTemplate)
 
-        addButton.after(sectionTemplate)
-
-        // sidebar item
-        if(sectionClass === 'section-main') {
-            const sidebarSectionItem = createSidebarSectionItem(id, true)
-
-            const previousSection = sectionTemplate.prevAll('.section-main').first()
-            if(previousSection.length == 0) { // is the first one
-                $('#sidebar-list-sections > ol').prepend(sidebarSectionItem)
-            } else {
-                const previousId = previousSection.attr('data-id')
-                const previousSidebarSection = $(`.sidebar-section[data-id="${previousId}"]`).parent('li')
-                previousSidebarSection.after(sidebarSectionItem)
-            }
-        } else {
-            addSectionToSidebar(id, sectionTemplate)
-        }
+        addSectionToSidebar(sectionClass, sectionTemplate, id)
 
         initializeSection(sectionTemplate)
     })
@@ -176,45 +145,26 @@ export function insertAddButton(element) {
         const minisectionbuttonWrapperTemplate = $($('#minisection-btn-template').html())
         const modalTemplate = $($('#minisection-modal-template').html())
 
-        const button = minisectionbuttonWrapperTemplate.find('.mini-section-btn')
+        const minisectionButton = minisectionbuttonWrapperTemplate.find('.mini-section-btn')
         const miniSection = modalTemplate.find('.section-mini')
         const input = miniSection.find('header input')
 
         const id = generateUniqueId()
 
-        button.attr('id', id + '-')
-        button.attr('data-id', id)
-        button.attr('data-minisection-btn-id', id)
+        minisectionButton.attr('id', id + '-')
+        minisectionButton.attr('data-id', id)
+        minisectionButton.attr('data-minisection-btn-id', id)
         
         modalTemplate.attr('data-minisection-modal-id', id)
         miniSection.attr('data-id', id)
         input.attr('data-id', id)
         input.attr('id', id + '-')
 
-        if(addButton.parent().is('.container-images')) {
-            splitContainer(addButton)
-        }
-        
-        let container = addButton.parent('.container-sections')
-        if(container.length == 0) {
-            if(addButton.next().is('.container-sections')) {
-                addButton.next().prepend(minisectionbuttonWrapperTemplate)
-            } else if (addButton.prev().is('.container-sections')) {
-                insertAddButton(addButton.prev().children().last())
-                addButton.prev().append(minisectionbuttonWrapperTemplate)
-            } else {
-                container = $(`<section class="container-sections container-form m-b-1"></section>`)
-                container.append(minisectionbuttonWrapperTemplate)
-                addButton.after(container)
-                insertAddButton(container)
-            }
-        } else {
-            addButton.after(minisectionbuttonWrapperTemplate)
-        }
+        insertImageOrMinisectionButton(addButton, minisectionbuttonWrapperTemplate)
 
         $('#workflow-form').append(modalTemplate)
 
-        addSectionToSidebar(id, button)
+        addSectionToSidebar('', minisectionButton, id)
         
         initializeMiniSectionButton(minisectionbuttonWrapperTemplate)
         initializeSection(miniSection)
@@ -224,10 +174,7 @@ export function insertAddButton(element) {
     /* add wysiwyg */
     addButton.find('.js-btnadd-wysiwyg').on('click', function() {
         const wysiwygTemplate = $($('#wysiwyg-template').html())
-        if(addButton.parent().is('.container-form')) {
-            splitContainer(addButton)
-        }
-        addButton.after(wysiwygTemplate)
+        insertSectionOrWysiwyg(addButton, wysiwygTemplate)
         initializeWysiwyg(wysiwygTemplate)
     })
     
@@ -239,7 +186,76 @@ export function insertAddButton(element) {
     })
     
     element.after(addButton)
+
+    // droppable
+    const droppableOptions = Object.assign({}, droppableOptionsBase)
+    if(addButton.parent().is('#workflow-form')) droppableOptions.accept = '.section-form'
+    addButton.find('.droppable').droppable(droppableOptions)
 } // end insertAddButton()
+
+/**
+ * Insert the given section or wysiwyg after the the given addButton and split containers if the element is placed into a container
+ * @param {JQuery<HTMLElement>} addButton 
+ * @param {JQuery<HTMLElement>} sectionOrWysiwyg 
+ * @returns void
+ */
+export function insertSectionOrWysiwyg(addButton, sectionOrWysiwyg) {
+    if(addButton.parent().is('.container-form')) {
+        splitContainer(addButton)
+    }
+    addButton.after(sectionOrWysiwyg)
+}
+
+/**
+ * Insert the given image or miniSectionButton after the the given addButton, creating the needed container and spliting the container if it doesn't match the type of element
+ * @param {JQuery<HTMLElement>} addButton 
+ * @param {JQuery<HTMLElement>} imageOrMinisectionButton 
+ * @returns void
+ */
+export function insertImageOrMinisectionButton(addButton, imageOrMinisectionButton) {
+    const parentContainerType = imageOrMinisectionButton.is('.img') ? 'images' : 'sections'
+    const invalidContainerType = imageOrMinisectionButton.is('.img') ? 'sections' : 'images'
+
+    if(addButton.parent().is(`.container-${invalidContainerType}`)) {
+        splitContainer(addButton)
+    }
+
+    const isInsideAValidContainer = addButton.parent().is(`.container-${parentContainerType}`)
+    if(!isInsideAValidContainer) {
+        if(addButton.next().is(`.container-${parentContainerType}`)) {
+            addButton.next().prepend(imageOrMinisectionButton)
+        } else if (addButton.prev().is(`.container-${parentContainerType}`)) {
+            insertAddButton(addButton.prev().children().last())
+            addButton.prev().append(imageOrMinisectionButton)
+        } else {
+            const container = $(`<section class="container-${parentContainerType} container-form m-b-1"></section>`)
+            container.append(imageOrMinisectionButton)
+            addButton.after(container)
+            insertAddButton(container)
+        }
+    } else {
+        addButton.after(imageOrMinisectionButton)
+    }
+}
+
+/**
+ * Merge element's previous and next containers if they are the same type
+ * @param {*} Target element likely surrounded by containers
+ * @returns void
+ */
+export function mergeSurroundingContainers(element) {
+    if(
+        element.prev().prev().is('.container-images') && element.next().next().is('.container-images') || 
+        element.prev().prev().is('.container-sections') && element.next().next().is('.container-sections')
+    ) {
+        const container1 = element.prev().prev('.container-form')
+        const container2 = element.next().next('.container-form')
+        insertAddButton(container1.children().last())
+        container1.append(container2.children())
+        container1.next('.btn-add-wrapper').remove()
+        container2.remove()
+    }
+}
 
 /**
  * Split the sections or image containers into two parts starting from the addButton, while maintaining the addButton between the generated containers.
@@ -289,26 +305,7 @@ function addAndPreviewImage(targetInput, addButton) {
     reader.onload = e => imgTemplate.find('img').attr('src', e.target.result)
     reader.readAsDataURL(file)
 
-    if(addButton.parent().is('.container-sections')) {
-        splitContainer(addButton)
-    }
-
-    let container = addButton.parent('.container-images')
-    if(container.length == 0) {
-        if(addButton.next().is('.container-images')) {
-            addButton.next().prepend(imgTemplate)
-        } else if (addButton.prev().is('.container-images')) {
-            insertAddButton(addButton.prev().children().last())
-            addButton.prev().append(imgTemplate)
-        } else {
-            container = $(`<section class="container-images container-form m-b-1"></section>`)
-            container.append(imgTemplate)
-            addButton.after(container)
-            insertAddButton(container)
-        }
-    } else {
-        addButton.after(imgTemplate)
-    }
+    insertImageOrMinisectionButton(addButton, imgTemplate)
 
     initializeImage(imgTemplate)
 }

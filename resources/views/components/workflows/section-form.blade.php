@@ -21,6 +21,7 @@
 
 <div>
     <div class="section-top-button-hook"></div>
+
     @php
         $section_items = $section->getAllContent();
     @endphp

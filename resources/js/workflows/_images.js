@@ -1,3 +1,4 @@
+import { draggableOptionsBase } from '../_jquery_ui'
 import { insertAddButton, insertDeleteButton, insertDragButton } from './_edit-buttons'
 
 /**
@@ -31,5 +32,7 @@ export function initializeImage(img) {
         insertDeleteButton(img)
         insertDragButton(img)
         if(!img.is(':last-child')) insertAddButton(img)
+
+        img.draggable(draggableOptionsBase)
     }
 }

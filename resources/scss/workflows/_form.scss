@@ -4,6 +4,10 @@
 @use '../base/typography' as t;
 @use '../base/zindex' as z;
 
+.section-form {
+    backdrop-filter: none !important; // to avoid problems with z-index using draggable
+}
+
 #workflow-form header {
     flex-direction: column-reverse;
     >div {
@@ -31,6 +35,9 @@
 }
 
 #workflow-form {
+    img {
+        -webkit-user-drag: none;
+    }
     .form-control, .form-control{
         width: auto;
         border-color: c.$purple-1;
@@ -70,6 +77,7 @@
         }
         @include m.sm {
             display: flex;
+            align-items: center;
             .btn-drag {
                 margin-right: 1rem;
             }
@@ -78,6 +86,43 @@
 }
 
 /* drag button */
+.section-form.ui-draggable-dragging {
+    opacity: 85%;
+    width: fit-content !important;
+    > header {
+        padding-right: 10px;
+        .btn-delete {
+            display: none;
+        }
+    }
+    > div {
+        display: none !important;
+    }
+    border-bottom: none;
+}
+.section-main.ui-draggable-dragging {
+    > header {
+        border-radius: v.$border-radius-md;
+    }
+}
+.img.ui-draggable-dragging {
+    opacity: 75%;
+}
+.btn-add.ui-droppable-active {
+    animation: btn-add-blink 1.5s infinite;
+    @keyframes btn-add-blink {
+        0% {
+            background-color: lighten($color: c.$purple-1, $amount: 10%);
+        }
+        50% {
+            background-color: lighten($color: c.$purple-1, $amount: 22%);
+        }
+        100% {
+            background-color: lighten($color: c.$purple-1, $amount: 10%);
+        }
+    }
+}
+
 .btn-drag {
     z-index: z.$drag-and-delete-buttons;
     background-color: lighten($color: c.$purple-1, $amount: 15%);
@@ -207,6 +252,9 @@
     min-height: 40px;
     @include m.md {
         min-height: auto;
+    }
+    &:disabled {
+        background-color: c.$purple-disabled !important;
     }
 }
 #workflow-form {

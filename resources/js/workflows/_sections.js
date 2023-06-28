@@ -1,5 +1,6 @@
 import { insertAddButton, insertDeleteButton, insertDragButton } from './_edit-buttons'
 import { createSlug } from '../_helpers'
+import { draggableOptionsBase } from '../_jquery_ui'
 
 /**
  * @param {JQuery<HTMLElement>} section
@@ -12,6 +13,8 @@ export function initializeSection(section) {
     }
     insertAddButton(section.find('.section-top-button-hook').first()) // at the beginning of the section
     insertAddButton(section) // after the section
+
+    if(!section.is('.section-mini')) section.draggable(draggableOptionsBase)
 
     section.find('.form-control').on('keyup', function() {
         const control = $(this)
@@ -63,6 +66,8 @@ export function initializeMiniSectionButton(buttonWrapper) {
         insertDeleteButton(buttonWrapper)
         insertDragButton(buttonWrapper)
         if(!buttonWrapper.is(':last-child')) insertAddButton(buttonWrapper)
+
+        buttonWrapper.draggable(draggableOptionsBase)
     }
 }
 
@@ -85,8 +90,7 @@ export function createSidebarSectionItem(id, isMain) {
 
     let li
     if(isMain) {
-        li = $('<li class="m-b-1"></li>')
-        li.append($('<ol class="unstyled-list"></ol>'))
+        li = $('<li><ol class="unstyled-list"></ol></li>')
     }else {
         li = $('<li>')
     }
@@ -153,26 +157,40 @@ export function smoothScrollToSection(id, duration) {
 }
 
 /**
- * Add a nested section or mini section to the sidebar index
- * @param {string} id
- * @param {JQuery<HTMLElement>} sectionOrbutton 
+ * @param {string} sectionClass 
+ * @param {JQuery<HTMLElement>} sectionOrbutton If it's a button, don't use the not wrapper, use the button itself
+ * @param {string} id 
+ * @param {JQuery<HTMLElement>|null} sidebarSectionItem Item to add to the sidebar or null to create a new one
  * @returns void
  */
-export function addSectionToSidebar(id, sectionOrbutton) {
-    const sidebarSectionItem = createSidebarSectionItem(id, false)
+export function addSectionToSidebar(sectionClass, sectionOrbutton, id, sidebarSectionItem = null) {
+    if(sectionClass === 'section-main') {
+        if(!sidebarSectionItem) sidebarSectionItem = createSidebarSectionItem(id, true)
 
-    const main = sectionOrbutton.parents('.section-main')
-    const sections = main.find('.section-nested, .mini-section-btn')
-    
-    const sectionIndex = sections.index(sectionOrbutton)
-    if(sectionIndex == 0) { // is the first one
-        const mainId = main.attr('data-id')
-        const mainSidebarItem = $(`.sidebar-section[data-id="${mainId}"]`)
-        mainSidebarItem.next('ol').prepend(sidebarSectionItem)
+        const previousSection = sectionOrbutton.prevAll('.section-main').first()
+        if(previousSection.length == 0) { // is the first one
+            $('#sidebar-list-sections > ol').prepend(sidebarSectionItem)
+        } else {
+            const previousId = previousSection.attr('data-id')
+            const previousSidebarSection = $(`.sidebar-section[data-id="${previousId}"]`).parent('li')
+            previousSidebarSection.after(sidebarSectionItem)
+        }
     } else {
-        const previousSection = sections.eq(sectionIndex - 1)
-        const previousId = previousSection.attr('data-id')
-        const previousSidebarItem = $(`.sidebar-section[data-id="${previousId}"]`).parent('li')
-        previousSidebarItem.after(sidebarSectionItem)
+        if(!sidebarSectionItem) sidebarSectionItem = createSidebarSectionItem(id, false)
+    
+        const main = sectionOrbutton.parents('.section-main')
+        const sections = main.find('.section-nested, .mini-section-btn')
+        
+        const sectionIndex = sections.index(sectionOrbutton)
+        if(sectionIndex == 0) { // is the first one
+            const mainId = main.attr('data-id')
+            const mainSidebarItem = $(`.sidebar-section[data-id="${mainId}"]`)
+            mainSidebarItem.next('ol').prepend(sidebarSectionItem)
+        } else {
+            const previousSection = sections.eq(sectionIndex - 1)
+            const previousId = previousSection.attr('data-id')
+            const previousSidebarItem = $(`.sidebar-section[data-id="${previousId}"]`).parent('li')
+            previousSidebarItem.after(sidebarSectionItem)
+        }
     }
 }

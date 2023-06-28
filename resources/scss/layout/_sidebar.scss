@@ -87,6 +87,11 @@ aside#sidebar {
             }
         }
     }
+
+    #sidebar-list-sections > ol > li{
+        margin-bottom: 1rem;
+    }
+
     .btn-sidebar {
         padding: .5rem;
         background-color: transparent;

@@ -38,7 +38,7 @@
                     {{-- main sections --}}
                     <ol class="unstyled-list">
                         @foreach ($workflow->sections as $main_section)
-                            <li class="m-b-1">
+                            <li>
                                 <x-workflows.sidebar-el :section="$main_section" :maxlen="18" />
                                 
                                 {{-- nested sections --}}

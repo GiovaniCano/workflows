@@ -24,6 +24,7 @@ $purple-1: #965cc2;
 $purple-2: hsl(274, 55%, 66%);
 $purple-gradient-l: linear-gradient(to bottom, $purple-0, $purple-2);
 $purple-gradient-l-dark: linear-gradient(to bottom, darken($purple-0, 5%), darken($purple-2, 5%));
+$purple-disabled: desaturate(darken($purple-1, 10%), 25%);
 
 $error: rgb(100, 35, 35);
 

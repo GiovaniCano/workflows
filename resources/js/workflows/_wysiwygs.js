@@ -1,3 +1,4 @@
+import { draggableOptionsBase } from '../_jquery_ui'
 import { insertAddButton, insertDeleteButton, insertDragButton } from './_edit-buttons'
 
 /* 
@@ -12,6 +13,8 @@ export function initializeWysiwyg(wysiwyg) {
     insertDeleteButton(wysiwyg.find('.wysiwyg-content-buttons'))
     insertDragButton(wysiwyg.find('.wysiwyg-content-buttons'))
     insertAddButton(wysiwyg)
+
+    wysiwyg.draggable(draggableOptionsBase)
     
     const editor = wysiwyg.find('.editor').get(0)
     const locale = $('meta[name="locale"]').attr('content');

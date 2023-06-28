@@ -3,7 +3,6 @@
 
 :root {
     --ck-border-radius: 8px !important;
-    --ck-color-base-background: transparent !important;
 }
 
 .ck-editor {
@@ -11,8 +10,13 @@
     border-radius: var(--ck-border-radius);
 }
 
-.ck-editor__top {
+.ck-editor__top .ck-toolbar {
     background-color: c.$wysiwyg !important;
+    border-radius: 0 !important;
+}
+
+.ck-editor__main > .ck-content {
+    background-color: transparent !important;
 }
 
 .ck-toolbar__separator {
