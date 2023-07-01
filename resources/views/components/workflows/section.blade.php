@@ -3,11 +3,12 @@
         'class' => 'grey-container'
     ]) }}
 >
-<header>
+<header @class(['js-sidebar-highlight-container' => $type !== 2])>
     <h2>
         {{-- <div class="debug">{{ $section->pivot->position }}</div> --}}
         <a href="#{{$section->id . '-' .$section->make_slug()}}"
             id="{{ $type === 2 ? '' : $section->id . '-' .$section->make_slug() }}"
+            @class(['js-sidebar-highlight-target' => $type !== 2])
         >
             # {{ $section->name }}
         </a>

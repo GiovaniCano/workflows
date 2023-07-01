@@ -7,10 +7,35 @@ import { addSectionToSidebar } from "./workflows/_sections"
 const draggableOptions = {
     revert: true,
     handle: '.btn-drag:first',
-    scroll: true,
-    scrollSensitivity: 35,
-    scrollSpeed: 30,
     zIndex: 9999,
+    scroll: false,
+    drag: function(e, ui) {
+        const scrollSensitivity = 44
+        const scrollRate = 20
+
+        const modal = $('.modal:visible .modal-content').get(0)
+        if(modal) {
+            // the css method used to make the modals scrollable while keeping the content vertically centered makes the .modal and the .modal-content to not get the "real height", so it has to be the section+padding instead
+            const modalStyles = getComputedStyle(modal)
+            const modalPaddingY = parseInt(modalStyles.paddingTop) + parseInt(modalStyles.paddingBottom)
+
+            const windowHeight = window.innerHeight
+            const modalHeight = modal.querySelector('section').clientHeight + modalPaddingY
+            const mouseY = e.clientY
+            const scrollYBottom = modal.scrollTop + windowHeight
+    
+            if(mouseY < 0 + scrollSensitivity) modal.scrollBy(0, -scrollRate)
+            if((mouseY > windowHeight - scrollSensitivity) && !(scrollYBottom >= modalHeight)) modal.scrollBy(0, scrollRate)
+        } else {
+            const windowHeight = window.innerHeight
+            const documentHeight = document.body.clientHeight
+            const mouseY = e.clientY
+            const scrollYBottom = window.scrollY + windowHeight
+    
+            if(mouseY < 0 + scrollSensitivity) window.scrollBy(0, -scrollRate)
+            if((mouseY > windowHeight - scrollSensitivity) && !(scrollYBottom >= documentHeight)) window.scrollBy(0, scrollRate)
+        }
+    },
     start: function(e, ui) {
         const item = ui.helper
         const previousAddBtn = item.prev('.btn-add-wrapper').length ? item.prev('.btn-add-wrapper') : item.parent('.container-form').prev('.btn-add-wrapper')
@@ -23,7 +48,7 @@ const draggableOptions = {
     },
     stop: function() {
         $('.droppable-invalid').prop('disabled', false).removeClass('droppable-invalid')
-    }
+    },
 }
 export const draggableOptionsBase = Object.freeze(draggableOptions)
 

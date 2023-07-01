@@ -2,7 +2,7 @@
     $editmode = boolval($workflow->id);
 @endphp
 
-@extends('app', ['title' => $editmode ? 'Edit: '.$workflow->name : 'Create', 'show_sidebar' => true])
+@extends('app', ['title' => $editmode ? 'Edit: '.$workflow->name : 'Create', 'show_sidebar' => true, 'class' => 'main-center main-100vh'])
 
 @section('content')
     <form id="workflow-delete-form" action="{{ route('workflow.destroy', $workflow) }}" method="POST" style="display: none">
@@ -10,7 +10,10 @@
         @csrf
     </form>
 
-    <form method="POST" class="container m-b-2" id="workflow-form">
+    {{-- loading spinner --}}
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+
+    <form method="POST" class="container m-b-2" id="workflow-form" style="display: none">
         <header class="workflow-header grey-container">
             <x-form-control 
                 class="m-0 h1" 
@@ -52,6 +55,12 @@
 
     {{-- form --}}
     <script>
+        window.onload = function() {
+            $('.lds-ellipsis').hide()
+            $('main').removeClass('main-center').removeClass('main-100vh')
+            $('#workflow-form').show()
+        }
+
         /* submit delete workflow form */
         function submitDeleteWorkflowForm() {
             if (confirm("{{ __('workflows.confirm-delete-workflow') }}")) {

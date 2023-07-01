@@ -98,7 +98,7 @@ export function insertAddButton(element) {
         `
             <div class="btn-add-wrapper">
                 <button type="button" class="btn-add droppable">+</button>
-                <ul class="unstyled-list btn-add-menu" style="display:none">`
+                <ul class="unstyled-list btn-add-menu">`
                 ,
                 isInsideMiniSection ? '' : `
                     <li><button type="button" class="js-btnadd-section">Section</button></li>
@@ -189,7 +189,11 @@ export function insertAddButton(element) {
 
     // droppable
     const droppableOptions = Object.assign({}, droppableOptionsBase)
-    if(addButton.parent().is('#workflow-form')) droppableOptions.accept = '.section-form'
+    if(addButton.parent().is('#workflow-form')) {
+        droppableOptions.accept = '.section-form'
+    } else if(!addButton.closest('.section-mini').length) {
+        droppableOptions.accept = ':not(.section-mini *)'
+    }
     addButton.find('.droppable').droppable(droppableOptions)
 } // end insertAddButton()
 

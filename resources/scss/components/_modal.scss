@@ -19,6 +19,7 @@
     .modal-content  {
         width: 100%;
         overflow-y: auto;
+        overflow-x: hidden;
         padding: calc(40px + 1rem) .5rem .5rem .5rem;
         @include m.sm {
             padding: calc(40px + 1rem) 2rem 2rem 2rem;

@@ -41,4 +41,5 @@ SQLite is used for testing.
     - Code blocks.
 
 ## Attributions for Third-Party Resources
-- [Wind icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/wind)
+- [Logo/favicon by Freepik - Flaticon](https://www.flaticon.com/free-icons/wind)
+- [Loading Spinner by loading.io](https://loading.io/)

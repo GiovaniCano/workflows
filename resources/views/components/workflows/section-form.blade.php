@@ -4,12 +4,12 @@
     ]) }}
     data-id="{{ $section->id }}"
 >
-<header class="section-header">
+<header @class(['section-header', 'js-sidebar-highlight-container' => $type !== 2])>
     <x-form-control
         data-id="{{ $section->id }}"
         data-mini="{{ $type === 2 ? true : false }}"
         id="{{ $type === 2 ? '' : $section->id . '-' .$section->make_slug() }}"
-        class="m-0 h2"
+        @class(['m-0', 'h2', 'js-sidebar-highlight-target' => $type !== 2])
         type="text"
         maxlength="25"
         :placeholder="__('workflows.section-placeholder')"

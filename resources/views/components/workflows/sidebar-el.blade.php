@@ -5,8 +5,8 @@
     title="{{ $section->name }}"
     id="sidebar-section-link-{{ $section->id }}"
     data-id="{{ $section->id }}"
-    class="sidebar-section"
     data-maxlen="{{ $maxlen }}"
+    {{ $attributes->merge(['class' => 'sidebar-section']) }}
 >
     # {{ Str::limit($section->name, $maxlen) }}
 </a>

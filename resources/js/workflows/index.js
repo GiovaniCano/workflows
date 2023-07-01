@@ -12,16 +12,43 @@ import './_form'
 /* toggle add menu */
 $(document).on('click', function(e) {
     if($(e.target).next().is('.btn-add-menu:hidden')) {
+        /**
+         * @type JQuery<HTMLElement>
+         */
         const btnAdd = $(e.target)
+
+        // no menu, only sections allowed
         if(btnAdd.parent().parent().is('#workflow-form')) {
             btnAdd.next('.btn-add-menu').find('.js-btnadd-section').trigger('click')
             return
         }
 
-        $('.btn-add-menu:visible').fadeOut()
-        btnAdd.next('.btn-add-menu').fadeIn()
+        // hide visible menus (including the current one) and reset styles
+        $('.btn-add-menu:visible').fadeOut({complete: function() { $(this).removeAttr('style') }})
+
+        // show menu
+        const menu = btnAdd.next('.btn-add-menu')
+        menu.fadeIn()
+
+        // adjust menu so it doesn't be outside the screen
+        const margin = 5
+        const scrollbarWidth = 10
+        
+        const rect = menu.get(0).getBoundingClientRect()
+        const left = rect.left
+        const right = rect.left + menu.get(0).offsetWidth
+        const windowWidth = window.innerWidth
+
+        if(left < margin) {
+            const x = Math.abs(left) + margin
+            menu.css('left', `calc(50% + ${x}px)`)
+        } else if(right > windowWidth - margin) {
+            const x = (right - windowWidth) + (margin + scrollbarWidth)
+            menu.css('left', `calc(50% - ${x}px)`)
+        }
     } else {
-        $('.btn-add-menu:visible').fadeOut()
+        // hide visible menus (including the current one) and reset styles
+        $('.btn-add-menu:visible').fadeOut({complete: function() { $(this).removeAttr('style') }})
     }
 })
 
@@ -61,11 +88,33 @@ $(document).on('click', function(e) {
         const urlId = url.substring(urlIdIndex)
         smoothScrollToSection(urlId, 777)
     }
-    // on anchor click
+    // sidebar links
     const anchorsToIds = $('a.sidebar-section')
-    anchorsToIds.each(function() {
-        $(this).on('click', function(e) {
-            e.preventDefault()
-            addSmoothScrollToSidebarItem($(this))
-        })
+    anchorsToIds.on('click', function(e) {
+        e.preventDefault()
+        addSmoothScrollToSidebarItem($(this))
     })
+    // sections links
+    $('section h2 a').on('click', function(e) {
+        e.preventDefault()
+        const id = $(this).attr('href')
+        smoothScrollToSection(id ,444)
+    })
+
+// sidebar sections highlights
+window.addEventListener('scroll', function() {
+    const sections = document.querySelectorAll('.js-sidebar-highlight-container')
+    let highlights = $()
+
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect()
+        if (rect.top >= 0 && rect.top <= 50) {
+            $(`#sidebar-list-sections a`).removeClass('current')
+
+            const id = section.querySelector('.js-sidebar-highlight-target').id
+            highlights = highlights.add($(`#sidebar-list-sections a[href="#${id}"]`))
+        }
+    })
+
+    highlights.addClass('current')
+})

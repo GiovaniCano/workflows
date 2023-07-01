@@ -126,10 +126,6 @@ export function smoothScrollToSection(id, duration) {
     const target = $(id)
     if(!target.length) return 
 
-    // highlight current section in sidebar
-    $(`#sidebar-list-sections a`).removeClass('current')
-    $(`#sidebar-list-sections a[href="${id}"]`).addClass('current')
-
     const currentScrollPos = window.scrollY
     const targetPos = target.offset().top
 

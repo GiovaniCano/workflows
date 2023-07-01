@@ -39,7 +39,7 @@
                     <ol class="unstyled-list">
                         @foreach ($workflow->sections as $main_section)
                             <li>
-                                <x-workflows.sidebar-el :section="$main_section" :maxlen="18" />
+                                <x-workflows.sidebar-el :section="$main_section" :maxlen="18" :class="$loop->first ? 'current' : ''" />
                                 
                                 {{-- nested sections --}}
                                 @if (count($main_section->sections))
