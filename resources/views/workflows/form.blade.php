@@ -26,9 +26,9 @@
             />
 
             <div>
-                <button onclick="submitDeleteWorkflowForm()" type="button" class="btn btn-edition">{{ __('Delete') }}</button>
+                <button onclick="submitDeleteWorkflowForm()" type="button" class="btn btn-primary">{{ __('Delete') }}</button>
                 <a href="{{ route('workflow.show', ['workflow' => $workflow, 'slug' => $workflow->make_slug()]) }}" class="btn btn-primary">{{ __('Cancel') }}</a>
-                <input type="submit" value="{{ __('Save') }}" class="btn btn-edition">
+                <input type="submit" value="{{ __('Save') }}" class="btn btn-primary">
             </div>
         </header>
 
@@ -53,13 +53,18 @@
     {{-- jQuery UI --}}
     <script src="/js/jquery/jquery-ui.min.js"></script>
 
+    {{-- Created editors --}}
+    <script>
+        var editors = {}
+    </script>
+
     {{-- form --}}
     <script>
-        window.onload = function() {
+        window.addEventListener('load', function() {
             $('.lds-ellipsis').hide()
             $('main').removeClass('main-center').removeClass('main-100vh')
             $('#workflow-form').show()
-        }
+        })
 
         /* submit delete workflow form */
         function submitDeleteWorkflowForm() {

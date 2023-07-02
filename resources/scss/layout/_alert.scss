@@ -1,0 +1,29 @@
+@use '../base/variables' as v;
+@use '../base/colors' as c;
+@use '../base/zindex' as z;
+
+#alert {
+    display: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: z.$alert;
+    box-shadow: v.$shadow-sm;
+    background-color: rgb(160, 253, 253);
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: v.$border-radius-sm;
+    letter-spacing: 1px;
+    pointer-events: none;
+    opacity: .89;
+
+    &.alert-success {
+        background-color: c.$mint-1;
+    }
+    &.alert-error {
+        background-color: c.$error-bg;
+    }
+    
+    transition: background-color .33s ease-in-out;
+}

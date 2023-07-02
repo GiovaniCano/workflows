@@ -27,5 +27,6 @@ $purple-gradient-l-dark: linear-gradient(to bottom, darken($purple-0, 5%), darke
 $purple-disabled: desaturate(darken($purple-1, 10%), 25%);
 
 $error: rgb(100, 35, 35);
+$error-bg: rgba(192, 133, 133);
 
 $wysiwyg: rgba(221, 221, 221, 0.7);

@@ -102,19 +102,21 @@ $(document).on('click', function(e) {
     })
 
 // sidebar sections highlights
-window.addEventListener('scroll', function() {
-    const sections = document.querySelectorAll('.js-sidebar-highlight-container')
-    let highlights = $()
-
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect()
-        if (rect.top >= 0 && rect.top <= 50) {
-            $(`#sidebar-list-sections a`).removeClass('current')
-
-            const id = section.querySelector('.js-sidebar-highlight-target').id
-            highlights = highlights.add($(`#sidebar-list-sections a[href="#${id}"]`))
-        }
+window.addEventListener('load', function() { // to wait until all the content is loaded in the form
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.js-sidebar-highlight-container')
+        let highlights = $()
+    
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect()
+            if (rect.top >= 0 && rect.top <= 50) {
+                $(`#sidebar-list-sections a`).removeClass('current')
+    
+                const id = section.querySelector('.js-sidebar-highlight-target').id
+                highlights = highlights.add($(`#sidebar-list-sections a[href="#${id}"]`))
+            }
+        })
+    
+        highlights.addClass('current')
     })
-
-    highlights.addClass('current')
 })

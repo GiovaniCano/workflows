@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('wysiwygs', function (Blueprint $table) {
             $table->id();
 
-            $table->text('content');
+            $table->string('content', 14000);
 
             $table->timestamps();
         });

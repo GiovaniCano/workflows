@@ -47,11 +47,24 @@
         padding: 0;
         margin: 0 1rem 1rem 1rem;
         border-radius: 8px;
+
+        &.invalid {
+            background-color: transparentize($color: c.$error-bg, $amount: .6) !important;
+            .wysiwyg-char-counter {
+                color: c.$error;
+                font-weight: bold;
+            }
+        }
         
         .wysiwyg-content-buttons {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             padding: 5px;
+        }
+        .wysiwyg-char-counter {
+            margin-left: auto;
+            margin-right: 2rem;
         }
         
         box-shadow: v.$shadow-sm;

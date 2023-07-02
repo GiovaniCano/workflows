@@ -23,6 +23,14 @@
  
     {{-- jquery --}}
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <script>
+        var alertTimeout
+    </script>
+
+    <script>
+        var translations = JSON.parse('{!! addslashes(json_encode(__('js'))) !!}');
+    </script>
     
     @vite(['resources/scss/app.scss'])
     @stack('css')
@@ -42,13 +50,15 @@
     
     @include('layout.footer')
 
+    <div id="alert"></div>
+
     @stack('modals')
     
     @include('layout.background')
 
     @stack('templates')
 
-    @vite(['resources/js/app.js'])
     @stack('js')
+    @vite(['resources/js/app.js'])
 </body>
 </html>

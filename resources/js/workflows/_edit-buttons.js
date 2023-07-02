@@ -1,8 +1,11 @@
+import alert from "../_alert"
 import { generateUniqueId } from "../_helpers"
 import { droppableOptionsBase } from "../_jquery_ui"
 import { initializeImage } from "./_images"
 import { initializeSection, initializeMiniSectionButton, addSectionToSidebar } from "./_sections"
 import { initializeWysiwyg } from "./_wysiwygs"
+
+const imageInput = '<input type="file" accept=".jpeg, .jpg, .png, .gif, .webp" style="display: none;">'
 
 /**
  * Create and append the delete button in the given element
@@ -101,13 +104,13 @@ export function insertAddButton(element) {
                 <ul class="unstyled-list btn-add-menu">`
                 ,
                 isInsideMiniSection ? '' : `
-                    <li><button type="button" class="js-btnadd-section">Section</button></li>
-                    <li><button type="button" class="js-btnadd-minisection">Mini Section</button></li>`
+                    <li><button type="button" class="js-btnadd-section">${translations.section}</button></li>
+                    <li><button type="button" class="js-btnadd-minisection">${translations.miniSection}</button></li>`
                 ,
-                    `<li><button type="button" class="js-btnadd-wysiwyg">Text</button></li>
+                    `<li><button type="button" class="js-btnadd-wysiwyg">${translations.textEditor}</button></li>
                     <li>
-                        <button type="button" class="js-btnadd-image">Image</button>
-                        <input type="file" style="display: none;">
+                        <button type="button" class="js-btnadd-image">${translations.image}</button>
+                        ${imageInput}
                     </li>
                 </ul>
             </div>
@@ -175,7 +178,8 @@ export function insertAddButton(element) {
     addButton.find('.js-btnadd-wysiwyg').on('click', function() {
         const wysiwygTemplate = $($('#wysiwyg-template').html())
         insertSectionOrWysiwyg(addButton, wysiwygTemplate)
-        initializeWysiwyg(wysiwygTemplate)
+        const editorId = generateUniqueId()
+        initializeWysiwyg(wysiwygTemplate, editorId)
     })
     
 
@@ -293,10 +297,18 @@ function splitContainer(addButton) {
  * @returns void
  */
 function addAndPreviewImage(targetInput, addButton) {
-    const file = targetInput.get(0).files[0]
-    if(!file) return
+    const maxSize = 1 * 1000 * 1000 // 2mb
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
 
-    const newInput = $('<input type="file" style="display: none;">')
+    const file = targetInput.get(0).files[0]
+
+    if(!file || !allowedTypes.includes(file.type)) return
+    if(file.size > maxSize) {
+        alert(translations.imageSizeError.replace('$size', '2Mb'), 'error')
+        return
+    }
+
+    const newInput = $(imageInput)
     newInput.on('change', function() {
         addAndPreviewImage($(this), addButton)
     })

@@ -67,7 +67,7 @@
 
             {{-- WYSIWYG --}}
             @case($models['wysiwyg'])
-                <x-workflows.wysiwyg-form :wysiwyg="$item" />
+                <x-workflows.wysiwyg-form :wysiwyg="$item" :editor-id="$item->id"/>
                 @break
 
             {{-- IMAGE --}}
