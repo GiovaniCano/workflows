@@ -2,7 +2,7 @@
  * @param {string} message 
  * @param {'success'|'error'} type class to be added
  */
-export default function alert(message, type = null) {
+export default function showAlert(message, type = null) {
     clearTimeout(alertTimeout)
 
     const alert = $('#alert')
@@ -14,5 +14,5 @@ export default function alert(message, type = null) {
 
     alert.fadeIn()
 
-    alertTimeout = setTimeout(() => alert.fadeOut(), 4500);
+    alertTimeout = setTimeout(() => alert.fadeOut(), 3500);
 }

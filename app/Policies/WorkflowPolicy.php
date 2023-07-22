@@ -22,7 +22,7 @@ class WorkflowPolicy
     public function view(User $user, Workflow $workflow): bool
     {
         $this->ensureIsWorkflow($workflow);
-        return $workflow->user_id = $user->id;
+        return $workflow->user_id === $user->id;
     }
 
     /**
@@ -39,7 +39,7 @@ class WorkflowPolicy
     public function update(User $user, Workflow $workflow): bool
     {
         $this->ensureIsWorkflow($workflow);
-        return $workflow->user_id = $user->id;
+        return $workflow->user_id === $user->id;
     }
 
     /**
@@ -48,12 +48,12 @@ class WorkflowPolicy
     public function delete(User $user, Workflow $workflow): bool
     {
         $this->ensureIsWorkflow($workflow);
-        return $workflow->user_id = $user->id;
+        return $workflow->user_id === $user->id;
     }
 
 
     /**
-     * Ensure that the requested workflow is actually a workflow and not a normal section
+     * Ensure that the requested workflow is actually a workflow and not a normal section, just in case
      * @param \App\Models\Workflow $workflow
      * @return void
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Image;
 use App\Models\Section;
@@ -14,33 +14,52 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        $user_id = User::factory(1)->create([
-            'email' => 'q@q.q'
-        ])[0]->id;
+        $state_callback = fn($attr, Section $section) => ['user_id' => $section->user_id, 'section_id' => $section->id];
 
-        Workflow::factory(2)->state(['type'=>0,'user_id'=>$user_id]) // 2 workflows per user
-            ->hasAttached( 
-                Section::factory(2)->state(['type'=>1,'user_id'=>$user_id]) // 3 sections per workflow
-                    ->hasAttached(Wysiwyg::factory(1), ['position'=>0])
-                    ->hasAttached(Image::factory(3), new Sequence(['position'=>1],['position'=>2],['position'=>3]))
-                    ->hasAttached(
-                        Section::factory(2)->state(['type'=>1,'user_id'=>$user_id]) // 2 sections per section
-                            ->hasAttached(Wysiwyg::factory(1), new Sequence(['position'=>0]))
-                            ->hasAttached(
-                                Section::factory(3)->state(['type'=>2,'user_id'=>$user_id]) // 3 mini sections per section
-                                    ->hasAttached(Wysiwyg::factory(1), new Sequence(['position'=>0])),
-                                new Sequence(['position'=>1],['position'=>2],['position'=>3])
-                            ),
-                        new Sequence(['position'=>4],['position'=>5])
-                    ),
-                    // ->hasAttached(Wysiwyg::factory(1), ['position'=>6]),
-                new Sequence(['position'=>0],['position'=>1])
+        $mini_sections_factory = Section::factory(3, ['type' => 2])
+            ->has(
+                Wysiwyg::factory(1)->state($state_callback)->state(['position'=>0])
             )
+            ->has(
+                Image::factory(3)->state($state_callback)->state(new Sequence(['position'=>1],['position'=>2],['position'=>3]))
+            );
+
+        $nested_sections_factory = Section::factory(2)
+            ->has(
+                Wysiwyg::factory(1)->state($state_callback)->state(['position'=>0])
+            )
+            ->has(
+                $mini_sections_factory->state($state_callback)->state(new Sequence(['position'=>1],['position'=>2],['position'=>3]))
+            );
+
+        $main_sections_factory = Section::factory(2)
+            ->has(
+                Wysiwyg::factory(1)->state($state_callback)->state(['position' => 0])
+            )
+            ->has(
+                Image::factory(3)->state($state_callback)->state(new Sequence(['position'=>1],['position'=>2],['position'=>3]))
+            )
+            ->has(
+                $nested_sections_factory->state($state_callback)->state(new Sequence(['position'=>4],['position'=>5]))
+            )
+            ->has(
+                Image::factory(2)->state($state_callback)->state(new Sequence(['position'=>6],['position'=>7]))
+            );
+
+        $workflow_factory = Workflow::factory(2, ['type' => 0, 'position' => 0, 'section_id' => null])
+            ->has(
+                $main_sections_factory->state($state_callback)->state(new Sequence(['position'=>0],['position'=>1]))
+            );
+
+        User::factory(2)
+            ->has($workflow_factory, 'workflows')
             ->create();
     }
 }

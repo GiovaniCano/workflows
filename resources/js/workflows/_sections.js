@@ -4,7 +4,7 @@ import { draggableOptionsBase } from '../_jquery_ui'
 
 /**
  * @param {JQuery<HTMLElement>} section
- * @returns void
+ * @returns {void}
  */
 export function initializeSection(section) {
     insertDeleteButton(section.find('.section-header').first())
@@ -44,7 +44,7 @@ export function initializeSection(section) {
 
 /**
  * @param {JQuery<HTMLElement>} buttonWrapper 
- * @returns void
+ * @returns {void}
  */
 export function initializeMiniSectionButton(buttonWrapper) {
     const button = buttonWrapper.find('.mini-section-btn')
@@ -102,7 +102,7 @@ export function createSidebarSectionItem(id, isMain) {
 /**
  * Add smooth scroll functionality to a sidebar anchor
  * @param {JQuery<HTMLElement>} sidebarItemAnchor Anchor inside a li in the sidebar
- * @returns void
+ * @returns {void}
  */
 export function addSmoothScrollToSidebarItem(sidebarItemAnchor) {
     const currentLocation = window.location.href
@@ -120,7 +120,7 @@ export function addSmoothScrollToSidebarItem(sidebarItemAnchor) {
  * Scroll to the given section id
  * @param {string|number} id Destination
  * @param {number} duration 
- * @returns void
+ * @returns {void}
  */
 export function smoothScrollToSection(id, duration) {
     const target = $(id)
@@ -157,7 +157,7 @@ export function smoothScrollToSection(id, duration) {
  * @param {JQuery<HTMLElement>} sectionOrbutton If it's a button, don't use the not wrapper, use the button itself
  * @param {string} id 
  * @param {JQuery<HTMLElement>|null} sidebarSectionItem Item to add to the sidebar or null to create a new one
- * @returns void
+ * @returns {void}
  */
 export function addSectionToSidebar(sectionClass, sectionOrbutton, id, sidebarSectionItem = null) {
     if(sectionClass === 'section-main') {

@@ -52,6 +52,13 @@ $(document).on('click', function(e) {
     }
 })
 
+/* close modals with the Escape key */
+$(document).on('keyup', function(e) {
+    if(e.code === 'Escape') {
+        $('.modal:visible').find('.modal-btn-close').trigger('click')
+    }
+})
+
 /* generate initial buttons */
     /* sections */
     $('#workflow-form .section-form').each(function() {
@@ -64,10 +71,8 @@ $(document).on('click', function(e) {
     })
 
     /* wysiwygs */
-    $('#workflow-form .wysiwyg-content').each(function(i) {
-        setTimeout(() => {
-            initializeWysiwyg($(this))
-        }, i * 300);
+    $('#workflow-form .wysiwyg-content').each(function() {
+        initializeWysiwyg($(this))
     })
 
     /* images */

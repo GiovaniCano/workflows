@@ -25,7 +25,7 @@ const editorConfig = {
 /**
  * @param {JQuery<HTMLElement>} wysiwyg
  * @param {number|string} editorId Id of the editor instance
- * @returns void
+ * @returns {void}
  */
 export function initializeWysiwyg(wysiwyg, editorId = null) {
     insertDeleteButton(wysiwyg.find('.wysiwyg-content-buttons'))

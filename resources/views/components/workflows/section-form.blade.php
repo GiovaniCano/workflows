@@ -1,6 +1,6 @@
 <section
     {{ $attributes->merge([
-        'class' => 'grey-container'
+        'class' => 'grey-container js-action-target'
     ]) }}
     data-id="{{ $section->id }}"
 >
@@ -33,7 +33,12 @@
                 @switch($item->type)
                     {{-- SECTION NORMAL --}}
                     @case(1)
-                        <x-workflows.section-form :section="$item" class="section-nested section-form js-action-target" />
+                        <x-workflows.section-form 
+                            :section="$item" 
+                            class="section-nested section-form" 
+                            :data-record_id="$item->id" 
+                            data-record_category="sections"
+                        />
                         @break
 
                     {{-- SECTION MINI --}}
@@ -45,13 +50,21 @@
                         )
                             <section class="container-sections container-form m-b-1">
                         @endunless
+
                                 <x-workflows.mini-section-btn :section="$item" class="js-action-target" />
+
                                 @push('mini-sections') 
                                     {{-- mini-sections stack is inside workflows.form --}}
-                                    <x-modal data-minisection-modal-id="{{ $item->id }}" class="modal-mini-section js-action-target">
-                                        <x-workflows.section-form :section="$item" class="section-mini section-form" />
+                                    <x-modal data-minisection-modal-id="{{ $item->id }}" class="modal-mini-section">
+                                        <x-workflows.section-form 
+                                            :section="$item" 
+                                            class="section-mini section-form" 
+                                            :data-record_id="$item->id" 
+                                            data-record_category="sections"
+                                        />
                                     </x-modal>
                                 @endpush
+
                         @unless (
                             isset($section_items[$loop->index+1]) 
                             && $section_items[$loop->index+1]::class === $models['section'] 
@@ -67,7 +80,12 @@
 
             {{-- WYSIWYG --}}
             @case($models['wysiwyg'])
-                <x-workflows.wysiwyg-form :wysiwyg="$item" :editor-id="$item->id"/>
+                <x-workflows.wysiwyg-form 
+                    :wysiwyg="$item" 
+                    :editor-id="$item->id" 
+                    :data-record_id="$item->id" 
+                    data-record_category="wysiwygs"
+                />
                 @break
 
             {{-- IMAGE --}}
@@ -76,7 +94,13 @@
                     <section class="container-images container-form m-b-1">
                 @endunless
 
-                        <x-workflows.image :image="$item" class="js-action-target" />
+                        <x-workflows.image 
+                            :image="$item" 
+                            class="js-action-target" 
+                            :img-id="$item->id" 
+                            :data-record_id="$item->id" 
+                            data-record_category="images"
+                        />
 
                 @unless (isset($section_items[$loop->index+1]) && $section_items[$loop->index+1]::class === $models['image'])
                     </section>

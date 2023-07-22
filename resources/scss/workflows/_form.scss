@@ -38,9 +38,12 @@
     img {
         -webkit-user-drag: none;
     }
-    .form-control, .form-control{
-        width: auto;
+    .form-control{
         border-color: c.$purple-1;
+        width: 100%;
+        @include m.sm {
+            width: auto;
+        }
     }
 
     .wysiwyg-content {

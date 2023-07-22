@@ -37,7 +37,7 @@
                             && $section_items[$loop->index-1]::class === $models['section'] 
                             && $section_items[$loop->index-1]->type == 2
                         )
-                            <section class="container-sections m-b-1">
+                            <section class="container-sections">
                         @endunless
                                 <x-workflows.mini-section-btn :section="$item" />
                                 @push('modals') 
@@ -69,7 +69,7 @@
             {{-- IMAGE --}}
             @case($models['image'])
                 @unless (isset($section_items[$loop->index-1]) && $section_items[$loop->index-1]::class === $models['image'])
-                    <section class="container-images m-b-1">
+                    <section class="container-images">
                 @endunless
 
                         <x-workflows.image :image="$item" />

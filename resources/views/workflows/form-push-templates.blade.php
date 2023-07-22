@@ -33,7 +33,7 @@
 
 {{-- image --}}
 <script id="image-template" type="text/template">
-    <x-workflows.image :image="$templatesModels['image']" class="js-action-target" />
+    <x-workflows.image :image="$templatesModels['image']" class="js-action-target img-added"/>
 </script>
 
 @endpush

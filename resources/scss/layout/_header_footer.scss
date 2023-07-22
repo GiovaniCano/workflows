@@ -8,11 +8,7 @@ header#header {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
-    height: 50px;
-    @include m.lg() {
-        height: auto;
-    }
+    height: auto;
 
     &.sidebar-present {
         overflow: hidden;

@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
 
             $table->string('content', 14000);
+            
+            $table->unsignedSmallInteger('position');
+            
+            $table->foreignId('section_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
         });

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class IndexTest extends TestCase
+class IndexShowTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
     
@@ -44,7 +44,7 @@ class IndexTest extends TestCase
         $res->assertRedirectToRoute('workflow.show', ['workflow' => $second_workflow, 'slug' => $second_workflow->make_slug()]);
     }
 
-    public function test_workflow_show_route_renders_correctly():void
+    public function test_workflow_show_route_renders_correctly(): void
     {
         Artisan::call('db:seed', ['--class=TestDatabaseSeeder']);
 
@@ -57,6 +57,7 @@ class IndexTest extends TestCase
         
         $response->assertSeeInOrder([
             '<aside',
+            route('workflow.create'),
             $workflow->name,
             ...$allSections->pluck('name'),
             '</aside>',
@@ -69,5 +70,21 @@ class IndexTest extends TestCase
             ...$allSections->pluck('name'),
             '</main>',
         ], false);
+    }
+
+    public function test_only_owner_can_see_workflow()
+    {
+        $owner = User::factory()->create();
+        $otherUser = User::factory()->create();
+        
+        $ownerWorkflow = $owner->workflows()->create(['type' => 0, 'name' => 'Owner Workflow', 'user_id' => $owner->id]);
+        
+        $this->actingAs($owner);
+        $response = $this->get(route('workflow.show', ['workflow' => $ownerWorkflow, 'slug' => $ownerWorkflow->make_slug()]));
+        $response->assertStatus(200);
+        
+        $this->actingAs($otherUser);
+        $response = $this->get(route('workflow.show', ['workflow' => $ownerWorkflow, 'slug' => $ownerWorkflow->make_slug()]));
+        $response->assertStatus(403);
     }
 }

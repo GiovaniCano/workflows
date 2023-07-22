@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\SectionFactory;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 
 class Workflow extends Section
@@ -11,15 +12,16 @@ class Workflow extends Section
 
     protected $attributes = [
         'type' => 0,
+        'position' => 0,
+        'section_id' => null,
     ];
 
     protected $with = ['sections'];
 
-    /**
-     * The "booted" method of the model.
-     */
     protected static function booted(): void
     {
+        parent::booted();
+
         static::addGlobalScope('workflow_type', function (Builder $builder) {
             $builder->where('type', 0);
         });
@@ -34,7 +36,7 @@ class Workflow extends Section
      */
     public function setAttribute($key, $value)
     {
-        if ($key !== 'type') parent::setAttribute($key, $value);
+        if ($key !== 'type' && $key !== 'position' && $key !== 'section_id') parent::setAttribute($key, $value);
     }
 
     /**
@@ -51,18 +53,18 @@ class Workflow extends Section
      * Workflows can not have images
      */
     public function images() {
-        abort(500, 'Workflows can not have images');
+        throw new Exception('Workflows can not have images');
     }
     /**
      * Workflows can not have wysiwygs
      */
     public function wysiwygs() {
-        abort(500, 'Workflows can not have wysiwygs');
+        throw new Exception('Workflows can not have wysiwygs');
     }
     /**
      * Workflows can only have sections
      */
     public function getAllContent() {
-        abort(500, 'Workflows can only have sections');
+        throw new Exception('Workflows can only have sections');
     }
 }

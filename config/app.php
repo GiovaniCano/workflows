@@ -161,7 +161,8 @@ return [
         /*
          * Package Service Providers...
          */
-        \App\Providers\FortifyServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\DropboxServiceProvider::class,
 
         /*
          * Application Service Providers...

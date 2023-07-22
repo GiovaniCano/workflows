@@ -213,4 +213,6 @@ return [
         'username'                 => 'usuario',
         'year'                     => 'año',
     ],
+
+    'integer_or_string' => 'El campo :attribute debe ser un número entero o una cadena de caracteres.',
 ];

@@ -9,4 +9,5 @@ return [
     'workflow-placeholder' => 'Nombre del workflow',
     'section-placeholder' => 'Nombre de la sección',
     'confirm-delete-workflow' => '¿Estás seguro de que deseas eliminar este workflow?',
+    'deleted' => 'Workflow eliminado',
 ];

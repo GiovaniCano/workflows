@@ -20,3 +20,10 @@
         <x-modal/>
     </script>
 @endpush
+
+@push('css')
+    <link rel="stylesheet" href="/prism/prism.css">
+@endpush
+@push('js')
+    <script src="/prism/prism.js"></script>
+@endpush

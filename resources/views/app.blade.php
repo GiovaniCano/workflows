@@ -10,7 +10,7 @@
 
     @yield('meta')
 
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>{{ isset($title) ? $title.' | ' : '' }}{{ config('app.name') }}</title>
 
     {{-- fonts --}}

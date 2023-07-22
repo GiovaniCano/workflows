@@ -18,8 +18,7 @@ class SectionFactory extends Factory
     {
         return [
             'name' => substr(fake()->sentence(rand(2,6), false), 0, 25),
-            // 'type' =>
-            // 'user_id' =>
+            'type' => 1, // default
         ];
     }
 }

@@ -13,15 +13,30 @@ class Section extends Model
 
     protected $fillable = [
         'name',
-        'type'
+        'type',
+        'position',
+        'section_id',
     ];
 
+    /**
+     * To quickly get unwanted relations (keep sync with $with property)
+     */
+    public static $without = ['sections', 'images', 'wysiwygs'];
     protected $with = ['sections', 'images', 'wysiwygs'];
-    
+
     /**
      * @var \Illuminate\Support\Collection<TKey, TValue>
      */
     private Collection $nested_sections;
+
+    protected static function booted()
+    {
+        static::creating(function($section) {
+            if(auth()->check()) {
+                $section->user_id = auth()->id();
+            }
+        });
+    }
 
     /**
      * @return string The slug version of the section's name
@@ -37,31 +52,20 @@ class Section extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Sections inside the current section
-     */
+    public function parent_section() {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+
     public function sections() {
-        return $this->morphedByMany(Section::class, 'sectionable', null, 'section_id')
-            ->using(Sectionable::class)
-            ->withTimestamps()
-            ->withPivot(['position'])
-            ->orderBy('pivot_position');
+        return $this->hasMany(Section::class, 'section_id')->orderBy('position');
     }
 
     public function images() {
-        return $this->morphedByMany(Image::class, 'sectionable', null, 'section_id')
-            ->using(Sectionable::class)
-            ->withTimestamps()
-            ->withPivot(['position'])
-            ->orderBy('pivot_position');
+        return $this->hasMany(Image::class)->orderBy('position');
     }
 
     public function wysiwygs() {
-        return $this->morphedByMany(Wysiwyg::class, 'sectionable', null, 'section_id')
-            ->using(Sectionable::class)
-            ->withTimestamps()
-            ->withPivot(['position'])
-            ->orderBy('pivot_position');
+        return $this->hasMany(Wysiwyg::class)->orderBy('position');
     }
 
     /**
@@ -69,7 +73,7 @@ class Section extends Model
      */
     public function getAllContent() {
         return $this->sections->concat($this->wysiwygs)->concat($this->images)
-            ->sortBy('pivot.position', SORT_NATURAL)->values();
+            ->sortBy('position', SORT_NATURAL)->values();
     }
 
     /**

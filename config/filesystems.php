@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'dropbox'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,6 +29,16 @@ return [
     */
 
     'disks' => [
+
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'refreshToken' => env('DROPBOX_REFRESH_TOKEN'),
+            'appKey' => env('DROPBOX_APP_KEY'),
+            'appSecret' => env('DROPBOX_APP_SECRET'),
+            'case_sensitive' => false,
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         'local' => [
             'driver' => 'local',

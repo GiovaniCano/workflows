@@ -1,5 +1,6 @@
-import alert from "../_alert"
-import { generateUniqueId } from "../_helpers"
+import showAlert from "../_alert"
+import _env from "../_env"
+import { __, generateUniqueId } from "../_helpers"
 import { droppableOptionsBase } from "../_jquery_ui"
 import { initializeImage } from "./_images"
 import { initializeSection, initializeMiniSectionButton, addSectionToSidebar } from "./_sections"
@@ -23,46 +24,69 @@ export function insertDeleteButton(element) {
     btn.on('click', function() {
         let target = $(this).closest('.js-action-target')
 
-        // mini section btn
-        if(target.hasClass('mini-section-btn-wrapper')) {
-            const miniSectionId = target.find('.mini-section-btn').attr('data-minisection-btn-id')
-            const modal = $(`[data-minisection-modal-id="${miniSectionId}"]`)
-            modal.find('.modal-btn-close').trigger('click')
-            modal.remove()
-        // mini section modal
-        } else if(target.hasClass('modal-mini-section')) {
-            const miniSectionId = target.attr('data-minisection-modal-id')
-            const button = $(`[data-minisection-btn-id="${miniSectionId}"]`)
-            button.next('.btn-delete').trigger('click')
-            return
-        }
-        
-        // if section: delete it from the sidebar
-        if(target.is('.section-form') || $(this).prev().is('.mini-section-btn')) {
-            const sectionId = target.attr('data-id') ?? $(this).prev().attr('data-id')
-            const sidebarItem = $(`.sidebar-section[data-id="${sectionId}"]`).parent('li')
-            // delete nested sections
-            target.find('.section-nested, .mini-section-btn-wrapper').each(function() {
-                $(this).find('.btn-delete').trigger('click')
-            })
-            sidebarItem.remove()
-        }
-
         // containers
         if(target.parent().is('.container-form')) {
-            // remove container if last child
+            // remove the container if last child
             if(target.siblings().length == 0) {
                 const container = target.parent()
                 container.after(target)
                 container.remove()
             }
-            // last in container
+
+            // remove the last button if the target is at the end
             if(target.is(':last-child')) target.prev('.btn-add-wrapper').remove()
         }
-
-        // merge containers
+        
         mergeSurroundingContainers(target)
 
+        // minisection button (delete button and trigger section delete)
+        if(target.is('.mini-section-btn-wrapper')) {
+            const miniSectionId = target.find('.mini-section-btn').attr('data-minisection-btn-id')
+            const miniSection = $(`[data-minisection-modal-id="${miniSectionId}"] .section-form`)
+
+            target.next('.btn-add-wrapper').remove()
+            target.remove()
+
+            miniSection.find('.btn-delete').trigger('click')
+            return
+        }
+
+        // existing records
+        if(target.attr('data-record_id')) {
+            const id = target.attr('data-record_id')
+            const category = target.attr('data-record_category')
+            deletedRecords[category].push(parseInt(id)) // var deletedRecords in form.blade.php
+        }
+
+        if(target.is('.section-form')) {
+            // delete nested content
+            target.find('.section-nested, .mini-section-btn-wrapper, .wysiwyg-content, .img').each(function() {
+                $(this).find('.btn-delete').trigger('click')
+            })
+
+            // delete section from the sidebar
+            const sectionId = target.attr('data-id') ?? $(this).prev().attr('data-id')
+            const sidebarItem = $(`.sidebar-section[data-id="${sectionId}"]`).parent('li')
+            sidebarItem.remove()
+        }
+
+        // images
+        if(target.is('.img')) {
+            const id = target.attr('data-img-id')
+            delete images[id] // var images in form.blade.php
+        }
+
+        // wysiwygs / editors
+        if(target.hasClass('wysiwyg-content')) {
+            const editorId = target.attr('data-editor-id')
+            delete editors[editorId] // var editors in views/workflows/form
+        }
+
+        // remove
+        if(target.is('.section-mini')) {
+            target.closest('.modal-mini-section').remove()
+            return
+        }
         target.next('.btn-add-wrapper').remove()
         target.remove()
     })
@@ -104,12 +128,12 @@ export function insertAddButton(element) {
                 <ul class="unstyled-list btn-add-menu">`
                 ,
                 isInsideMiniSection ? '' : `
-                    <li><button type="button" class="js-btnadd-section">${translations.section}</button></li>
-                    <li><button type="button" class="js-btnadd-minisection">${translations.miniSection}</button></li>`
+                    <li><button type="button" class="js-btnadd-section">${__('section')}</button></li>
+                    <li><button type="button" class="js-btnadd-minisection">${__('miniSection')}</button></li>`
                 ,
-                    `<li><button type="button" class="js-btnadd-wysiwyg">${translations.textEditor}</button></li>
+                    `<li><button type="button" class="js-btnadd-wysiwyg">${__('textEditor')}</button></li>
                     <li>
-                        <button type="button" class="js-btnadd-image">${translations.image}</button>
+                        <button type="button" class="js-btnadd-image">${__('image')}</button>
                         ${imageInput}
                     </li>
                 </ul>
@@ -205,7 +229,7 @@ export function insertAddButton(element) {
  * Insert the given section or wysiwyg after the the given addButton and split containers if the element is placed into a container
  * @param {JQuery<HTMLElement>} addButton 
  * @param {JQuery<HTMLElement>} sectionOrWysiwyg 
- * @returns void
+ * @returns {void}
  */
 export function insertSectionOrWysiwyg(addButton, sectionOrWysiwyg) {
     if(addButton.parent().is('.container-form')) {
@@ -218,7 +242,7 @@ export function insertSectionOrWysiwyg(addButton, sectionOrWysiwyg) {
  * Insert the given image or miniSectionButton after the the given addButton, creating the needed container and spliting the container if it doesn't match the type of element
  * @param {JQuery<HTMLElement>} addButton 
  * @param {JQuery<HTMLElement>} imageOrMinisectionButton 
- * @returns void
+ * @returns {void}
  */
 export function insertImageOrMinisectionButton(addButton, imageOrMinisectionButton) {
     const parentContainerType = imageOrMinisectionButton.is('.img') ? 'images' : 'sections'
@@ -248,8 +272,8 @@ export function insertImageOrMinisectionButton(addButton, imageOrMinisectionButt
 
 /**
  * Merge element's previous and next containers if they are the same type
- * @param {*} Target element likely surrounded by containers
- * @returns void
+ * @param {JQuery<HTMLElement>} element Target element likely surrounded by containers
+ * @returns {void}
  */
 export function mergeSurroundingContainers(element) {
     if(
@@ -268,7 +292,7 @@ export function mergeSurroundingContainers(element) {
 /**
  * Split the sections or image containers into two parts starting from the addButton, while maintaining the addButton between the generated containers.
  * @param {JQuery<HTMLElement>} addButton
- * @returns void
+ * @returns {void}
  */
 function splitContainer(addButton) {
     const originalContainer = addButton.parent('.container-form')
@@ -294,17 +318,17 @@ function splitContainer(addButton) {
  * Add the image selected by the user after the used add button and show a preview
  * @param {JQuery<HTMLElement>} targetInput Input where the file is going to be linked
  * @param {JQuery<HTMLElement>} addButton "Add button" that owns the input
- * @returns void
+ * @returns {void}
  */
 function addAndPreviewImage(targetInput, addButton) {
-    const maxSize = 1 * 1000 * 1000 // 2mb
+    const maxSize = _env.maxImageSize
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
 
     const file = targetInput.get(0).files[0]
 
     if(!file || !allowedTypes.includes(file.type)) return
     if(file.size > maxSize) {
-        alert(translations.imageSizeError.replace('$size', '2Mb'), 'error')
+        showAlert(__('submitErrors.imageSizeError').replace('$size', '2Mb'), 'error')
         return
     }
 
@@ -320,8 +344,12 @@ function addAndPreviewImage(targetInput, addButton) {
     const reader = new FileReader()
     reader.onload = e => imgTemplate.find('img').attr('src', e.target.result)
     reader.readAsDataURL(file)
-
+    
     insertImageOrMinisectionButton(addButton, imgTemplate)
-
+    
     initializeImage(imgTemplate)
+
+    const id = generateUniqueId()
+    imgTemplate.attr('data-img-id', id)
+    images[id] = file // var images in form.blade.php
 }

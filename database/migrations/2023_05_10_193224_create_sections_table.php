@@ -15,7 +15,13 @@ return new class extends Migration
             $table->id();
 
             $table->string('name', 25)->comment('Unique if type is 0');
+
             $table->unsignedTinyInteger('type')->comment('0, 1 or 2');
+
+            $table->unsignedSmallInteger('position');
+            
+            $table->foreignId('section_id')->comment('null only if the section is type 0')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();

@@ -213,4 +213,6 @@ return [
         'username'                 => 'username',
         'year'                     => 'year',
     ],
+
+    'integer_or_string' => 'The :attribute must be an integer or a string.',
 ];

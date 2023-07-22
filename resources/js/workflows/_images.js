@@ -3,7 +3,7 @@ import { insertAddButton, insertDeleteButton, insertDragButton } from './_edit-b
 
 /**
  * @param {JQuery<HTMLElement>} img Image wrapper (.img)
- * @returns void
+ * @returns {void}
  */
 export function initializeImage(img) {
     // modal Image

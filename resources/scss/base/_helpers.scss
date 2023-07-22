@@ -82,6 +82,10 @@
     display: block !important;
 }
 
+.loading-cursor {
+    cursor: wait !important;
+}
+
 .btn {
     width: fit-content;
     border: none;
@@ -100,6 +104,9 @@
         background: c.$mint-gradient-l;
         &:hover {
             background: c.$mint-gradient-l-dark;
+        }
+        &:disabled {
+            background: darken(desaturate(c.$mint-1, 11%), 8%);
         }
     }
     &.btn-secondary {

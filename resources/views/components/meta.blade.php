@@ -1,6 +1,6 @@
 @props([
     'title',
-    'desckey',
+    'desckey', // key of the lang file to get the description
     'route',
 ])
 
