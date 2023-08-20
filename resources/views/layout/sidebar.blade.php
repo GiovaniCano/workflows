@@ -67,7 +67,7 @@
             <nav id="profile-menu" style="display: none">
                 <ul class="unstyled-list">
                     <li><a href="{{ route('user.profile') }}">{{ __('Profile') }}</a></li>
-                    <li><a href="{{ route('user.payment') }}">{{ __('Payment') }}</a></li>
+                    {{-- <li><a href="{{ route('user.payment') }}">{{ __('Payment') }}</a></li> --}}
 
                     <li class="separator"></li>
 

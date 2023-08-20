@@ -2,12 +2,12 @@
     <div class="container">
         <nav>
             <ul class="unstyled-list m-r-1">
-                <li>
+                {{-- <li>
                     <a href="{{route('landing-page')}}">{{__('Home')}}</a>
-                </li>
-                <li>
+                </li> --}}
+                {{-- <li>
                     <a href="{{route('pricing')}}">{{__('Pricing')}}</a>
-                </li>
+                </li> --}}
                 <li>
                     <form action="{{route('set-locale')}}" method="POST">
                         @csrf
@@ -18,6 +18,9 @@
                         </select>
                     </form>
                 </li>
+                <li>
+                    <a href="/sitemap.xml" target="_blank">{{__('Sitemap')}}</a>
+                </li>
             </ul>
 
             <ul class="unstyled-list">
@@ -26,9 +29,6 @@
                 </li>
                 <li>
                     <a href="{{route('terms')}}">{{__('Terms and conditions')}}</a>
-                </li>
-                <li>
-                    <a href="/sitemap.xml" target="_blank">{{__('Sitemap')}}</a>
                 </li>
             </ul>
         </nav>

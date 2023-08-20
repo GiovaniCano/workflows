@@ -11,8 +11,8 @@ class UserController extends Controller
         return view('user.profile');
     }
 
-    public function payment()
-    {
-        return view('user.payment');
-    }
+    // public function payment()
+    // {
+    //     return view('user.payment');
+    // }
 }
