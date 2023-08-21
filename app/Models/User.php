@@ -57,4 +57,8 @@ class User extends Authenticatable implements HasLocalePreference
     public function workflows() {
         return $this->hasMany(Workflow::class);
     }
+
+    public function images() {
+        return $this->hasMany(Image::class);
+    }
 }

@@ -122,6 +122,12 @@
             background: c.$purple-gradient-l-dark;
         }
     }
+    &.btn-danger {
+        background: c.$error-bg;
+        &:hover {
+            background: darken($color: c.$error-bg, $amount: 10%);
+        }
+    }
 }
 
 .unstyled-list {

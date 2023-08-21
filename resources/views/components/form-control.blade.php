@@ -11,7 +11,7 @@
             {{ $slot }}
         </label>
     </div>
-    @error($name)
+    @error($name, $bag)
         <span class="error-feedback">{{$message}}</span>
     @enderror
 
@@ -24,7 +24,7 @@
         value="{{ $type === 'password' ? '' : old($name, $value) }}" 
         {{ $attributes->class(['form-control', 'is-invalid' => $errors->has($name)]) }} 
     >
-    @error($name)
+    @error($name, $bag)
         <span class="error-feedback">{{$message}}</span>
     @enderror
 

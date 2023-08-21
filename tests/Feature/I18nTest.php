@@ -37,7 +37,7 @@ class I18nTest extends TestCase
 
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response->assertRedirect();
         $this->assertEquals('es', app()->getLocale());
         $response->assertCookieMissing('locale');
     }
@@ -45,7 +45,7 @@ class I18nTest extends TestCase
     public function test_locale_middleware_sets_locale_with_cookie()
     {
         $response = $this->withUnencryptedCookie('locale', 'es')->get('/');
-        $response->assertStatus(200);
+        $response->assertRedirect();
         $this->assertEquals('es', app()->getLocale());
     }
 
@@ -54,7 +54,7 @@ class I18nTest extends TestCase
         $browserLanguage = 'es_MX';
         $response = $this->get('/', ['Accept-Language' => $browserLanguage]);
 
-        $response->assertStatus(200);
+        $response->assertRedirect();
         $response->assertCookieMissing('locale');
         $this->assertEquals('es', app()->getLocale());
     }

@@ -50,6 +50,8 @@
     "Keep me logged in": "Keep me logged in",
     "Password": "Password",
     "Confirm password": "Confirm password",
+    "Current password": "Current password",
+    "New password": "New password",
     "Email": "Email",
     "Name": "Name",
 
@@ -69,5 +71,8 @@
 
     "Save": "Save",
     "Cancel": "Cancel",
-    "Delete": "Delete"
+    "Delete": "Delete",
+
+    "Delete account": "Delete account",
+    "This action cannot be undone": "This action cannot be undone"
 }

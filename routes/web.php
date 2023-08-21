@@ -32,5 +32,6 @@ Route::post('set-locale', [PagesController::class, 'set_locale'])->name('set-loc
 
 Route::prefix('user')->controller(UserController::class)->middleware('auth')->group(function() {
     Route::get('profile', 'profile')->name('user.profile');
+    Route::delete('', 'destroy')->name('user.destroy');
     // Route::get('payment', 'payment')->name('user.payment');
 });

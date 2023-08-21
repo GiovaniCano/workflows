@@ -50,6 +50,8 @@
     "Keep me logged in": "Mantener sesión iniciada",
     "Password": "Contraseña",
     "Confirm password": "Confirmar contraseña",
+    "Current password": "Contraseña actual",
+    "New password": "Nueva contraseña",
     "Email": "Correo electrónico",
     "Name": "Nombre",
 
@@ -69,5 +71,8 @@
 
     "Save": "Guardar",
     "Cancel": "Cancelar",
-    "Delete": "Eliminar"
+    "Delete": "Eliminar",
+
+    "Delete account": "Eliminar cuenta",
+    "This action cannot be undone": "Esta acción no puede deshacerse"
 }

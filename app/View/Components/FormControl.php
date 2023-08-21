@@ -16,6 +16,7 @@ class FormControl extends Component
         public string $name,
         public string $placeholder = '',
         public string $value = '',
+        public string|null $bag = null,
     )
     {
         //
