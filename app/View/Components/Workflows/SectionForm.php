@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\workflows;
+namespace App\View\Components\Workflows;
 
 use App\Models\Section as ModelsSection;
 use Closure;

@@ -36,6 +36,6 @@
 
     <div class="grey-container links m-b-3">
         <a class="btn btn-primary d-b" href="{{route('login')}}">{{__('Login')}}</a>
-        <a class="btn btn-primary d-b m-t-1" href="#">{{__('Reset Password')}}</a>
+        {{-- <a class="btn btn-primary d-b m-t-1" href="#">{{__('Reset Password')}}</a> --}}
     </div>
 @endsection

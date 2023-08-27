@@ -110,7 +110,11 @@
         }
 
         /* prevent to leave the form */
-        window.onbeforeunload = e => e.preventDefault()
+        window.onbeforeunload = e => {
+            e.preventDefault()
+            e.returnValue = '' // This is required for some browsers
+            return '' // This is required for other browsers
+        }
     </script>
 @endpush
 

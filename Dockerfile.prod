@@ -1,0 +1,40 @@
+FROM php:8.2.4-apache
+
+WORKDIR /var/www/html
+
+# [ Linux ]
+RUN apt update && \
+    # apt upgrade -y && \
+    apt install -y \
+    unzip zip \
+    zlib1g-dev libpng-dev libjpeg-dev libwebp-dev libgd-dev
+
+COPY . .
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+# [ Apache & PHP ]
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
+    && a2enmod rewrite \
+    && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && sed -i 's/^\s*max_execution_time\s*=.*/max_execution_time = 60/' "$PHP_INI_DIR/php.ini" \
+    && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install pdo_mysql bcmath gd \
+    && composer install \
+        --no-interaction \
+        --no-dev \
+        --optimize-autoloader \
+        --no-progress \
+        --no-scripts \
+        --no-plugins \
+        --no-ansi \
+    && php artisan view:cache \
+    && php artisan route:cache \
+    && php artisan event:cache \
+    && chown -R www-data:www-data .
+
+EXPOSE 80
+
+#---------------------------------------------
+# docker exec laravel php artisan key:generate
+# docker exec laravel php artisan config:cache
+# docker exec laravel php artisan migrate
