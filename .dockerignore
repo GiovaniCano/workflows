@@ -21,3 +21,5 @@ vite.config.js
 README.md
 
 pre-production
+
+fly.toml

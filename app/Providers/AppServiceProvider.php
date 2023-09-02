@@ -21,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // the following is to avoid "laravel was loaded over HTTPS, but requested an insecure stylesheet"
+        // and to avoid insecure routes in forms
+        if($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
+
         ViewFacade::composer('layout.sidebar', function(View $view) {
             if(auth()->check()) {
                 $workflows = auth()->user()->workflows()->without('sections', 'images', 'wysiwygs')->orderBy('name')->get();

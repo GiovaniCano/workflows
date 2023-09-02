@@ -3,12 +3,10 @@ name: workflows
 services:
   laravel:
     image: workflows-prod:1.0.0
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
+    build: .
     container_name: laravel
     ports: 
-      - 80:80
+      - 8080:8080
     volumes:
       - ./.env:/var/www/html/.env
     depends_on: 

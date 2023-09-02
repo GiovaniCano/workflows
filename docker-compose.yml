@@ -3,7 +3,9 @@ name: workflows
 services:
   laravel:
     image: workflows-dev
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     container_name: laravel
     ports: 
       - 80:80
