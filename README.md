@@ -3,8 +3,11 @@
 ## Introduction
 Introducing an application that simplifies workflow creation with sections, images, and WYSIWYG editors. Users can easily build custom workflows and make content visually appealing with the powerful editor. Streamline your workflow creation process with this user-friendly application.
 
-## Usage
-In local environment, using Laragon with "auto virtual hosts", visit [http://workflows.test](http://workflows.test).
+## Usage (development)
+
+1. Start Docker
+2. Run `docker compose up`
+3. Visit http://127.0.0.1:80
 
 ## Testing
 SQLite is used for testing.
